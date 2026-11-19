@@ -27,7 +27,10 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  position: sticky;   /* 스크롤해도 상단에 고정 */
+  top: 0;
+  z-index: 50;
+  background: #fff;
 }
 .header__left, .header__right { display: flex; gap: 14px; align-items: center; }
 .header__logo { position: absolute; left: 50%; transform: translateX(-50%); }
@@ -109,7 +112,7 @@ a { color: inherit; text-decoration: none; }
 .footer hr { max-width: var(--wrap); margin: 50px auto 0; border: 0; border-top: 1px solid rgba(255,255,255,.7); }
 
 /* ---------- 사이드 메뉴 ---------- */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; } /* 고정 헤더에 가려지지 않게 */
 body.menu-open { overflow: hidden; }
 
 .overlay {
