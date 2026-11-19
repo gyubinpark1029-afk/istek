@@ -227,3 +227,20 @@ body.menu-open { overflow: hidden; }
 .top-btn:hover { background: var(--point); }
 .top-btn svg { width: 22px; height: 22px; }
 .top-btn span { font-size: 11px; font-weight: 700; line-height: 1; margin-top: -2px; }
+
+/* ---------- Recommend: 브랜드 태그 ---------- */
+.tag {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  padding: 4px 2px;
+  border-bottom: 3px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.tag:hover { color: var(--point); }
+.tag.is-active { color: var(--blue); border-bottom-color: var(--blue); }
+.product-empty { width: 100%; padding: 80px 0; text-align: center; color: #888; font-size: 20px; }

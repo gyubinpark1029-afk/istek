@@ -88,34 +88,13 @@
   <section class="section recommend" id="recommend">
     <h2 class="title">Recommend<span>,</span></h2>
     <ul class="tags">
-      <li><a href="#">#istek</a></li>
-      <li><a href="#">#HUMAS</a></li>
-      <li><a href="#">#evergreenTop</a></li>
-      <li><a href="#">#analytik-jena</a></li>
-      <li><a href="#">#miraest</a></li>
+      <li><button type="button" class="tag is-active" data-brand="istek" aria-pressed="true">#istek</button></li>
+      <li><button type="button" class="tag" data-brand="HUMAS" aria-pressed="false">#HUMAS</button></li>
+      <li><button type="button" class="tag" data-brand="evergreenTop" aria-pressed="false">#evergreenTop</button></li>
+      <li><button type="button" class="tag" data-brand="analytik-jena" aria-pressed="false">#analytik-jena</button></li>
+      <li><button type="button" class="tag" data-brand="miraest" aria-pressed="false">#miraest</button></li>
     </ul>
-    <ul class="product-list">
-      <li>
-        <div class="product__img ph"></div>
-        <p class="product__name">하이라이트 전기히터 4구</p>
-        <p class="product__price">448,000원</p>
-      </li>
-      <li>
-        <div class="product__img ph"></div>
-        <p class="product__name">하이라이트 전기히터 4구</p>
-        <p class="product__price">448,000원</p>
-      </li>
-      <li>
-        <div class="product__img ph"></div>
-        <p class="product__name">하이라이트 전기히터 4구</p>
-        <p class="product__price">448,000원</p>
-      </li>
-      <li>
-        <div class="product__img ph"></div>
-        <p class="product__name">하이라이트 전기히터 4구</p>
-        <p class="product__price">448,000원</p>
-      </li>
-    </ul>
+    <ul class="product-list" id="productList" aria-live="polite"></ul>
   </section>
 
   <!-- After Service -->
@@ -153,6 +132,7 @@
     <span>TOP</span>
   </button>
 
+  <script src="js/products.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>

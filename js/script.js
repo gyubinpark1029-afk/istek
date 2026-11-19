@@ -59,4 +59,63 @@
   topBtn.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // Recommend: #브랜드를 누르면 그 브랜드의 제품만 보여주기
+  var productList = document.getElementById('productList');
+  var tags = document.querySelectorAll('.tag');
+
+  function renderProducts(brand) {
+    productList.textContent = '';
+    var items = PRODUCTS.filter(function (p) { return p.brand === brand; });
+
+    if (items.length === 0) {
+      var empty = document.createElement('li');
+      empty.className = 'product-empty';
+      empty.textContent = '등록된 제품이 없습니다.';
+      productList.appendChild(empty);
+      return;
+    }
+
+    items.forEach(function (p) {
+      var li = document.createElement('li');
+
+      var img;
+      if (p.image) {
+        img = document.createElement('img');
+        img.src = p.image;
+        img.alt = p.name;
+        img.className = 'product__img';
+      } else {
+        img = document.createElement('div');
+        img.className = 'product__img ph';
+      }
+
+      var name = document.createElement('p');
+      name.className = 'product__name';
+      name.textContent = p.name;
+
+      var price = document.createElement('p');
+      price.className = 'product__price';
+      price.textContent = p.price.toLocaleString('ko-KR') + '원';
+
+      li.appendChild(img);
+      li.appendChild(name);
+      li.appendChild(price);
+      productList.appendChild(li);
+    });
+  }
+
+  tags.forEach(function (tag) {
+    tag.addEventListener('click', function () {
+      tags.forEach(function (t) {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-pressed', 'false');
+      });
+      tag.classList.add('is-active');
+      tag.setAttribute('aria-pressed', 'true');
+      renderProducts(tag.dataset.brand);
+    });
+  });
+
+  renderProducts(document.querySelector('.tag.is-active').dataset.brand);
 })();
