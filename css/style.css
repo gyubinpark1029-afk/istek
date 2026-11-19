@@ -199,3 +199,31 @@ body.menu-open { overflow: hidden; }
 .menu__item.is-open .menu__sub { grid-template-rows: 1fr; }
 .menu__sub a { display: block; padding: 14px 24px 14px 40px; font-size: 17px; }
 .menu__sub a:hover { color: var(--blue); }
+
+/* ---------- TOP 버튼 ---------- */
+.top-btn {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity .3s, visibility .3s, transform .3s, background .2s;
+  z-index: 40;
+}
+.top-btn.is-show { opacity: 1; visibility: visible; transform: translateY(0); }
+.top-btn:hover { background: var(--point); }
+.top-btn svg { width: 22px; height: 22px; }
+.top-btn span { font-size: 11px; font-weight: 700; line-height: 1; margin-top: -2px; }

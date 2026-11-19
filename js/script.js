@@ -48,4 +48,15 @@
       document.body.classList.remove('menu-open');
     });
   });
+
+  // TOP 버튼: 조금 스크롤하면 나타나고, 누르면 맨 위로
+  var topBtn = document.getElementById('topBtn');
+  function toggleTop() {
+    topBtn.classList.toggle('is-show', window.scrollY > 300);
+  }
+  window.addEventListener('scroll', toggleTop, { passive: true });
+  toggleTop();
+  topBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
