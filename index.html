@@ -14,7 +14,7 @@
   <!-- 헤더 -->
   <header class="header">
     <div class="header__left">
-      <button type="button" class="hamburger" aria-label="메뉴 열기">
+      <button type="button" class="hamburger" id="menuOpen" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
         <span></span>
         <span></span>
         <span></span>
@@ -34,11 +34,46 @@
     </div>
   </header>
 
+  <!-- 사이드 메뉴 -->
+  <div class="overlay" id="overlay"></div>
+  <nav class="drawer" id="drawer" aria-label="메인 메뉴" aria-hidden="true">
+    <div class="drawer__head">
+      <img src="images/logo.svg" alt="istek">
+      <button type="button" class="drawer__close" id="menuClose" aria-label="메뉴 닫기">
+        <span></span><span></span>
+      </button>
+    </div>
+    <ul class="menu">
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">브랜드별<i></i></button>
+        <div class="menu__sub"><ul>
+          <li><a href="#">istek</a></li>
+          <li><a href="#">HUMAS</a></li>
+          <li><a href="#">miraest</a></li>
+          <li><a href="#">evergreenTop</a></li>
+          <li><a href="#">analytik-jena</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">제품 카테고리<i></i></button>
+        <div class="menu__sub"><ul>
+          <!-- TODO: 실제 카테고리로 교체 -->
+          <li><a href="#">카테고리 1</a></li>
+          <li><a href="#">카테고리 2</a></li>
+          <li><a href="#">카테고리 3</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item"><a class="menu__link" href="#service">견적 문의</a></li>
+      <li class="menu__item"><a class="menu__link" href="#service">고객지원</a></li>
+      <li class="menu__item"><a class="menu__link" href="#">회사소개 / 오시는 길</a></li>
+    </ul>
+  </nav>
+
   <!-- 히어로 -->
   <section class="hero ph"></section>
 
   <!-- Partnership -->
-  <section class="section partnership">
+  <section class="section partnership" id="partnership">
     <h2 class="title">Partnership<span>,</span></h2>
     <ul class="partner-list">
       <li><div class="circle ph"></div><p>istek</p></li>
@@ -50,7 +85,7 @@
   </section>
 
   <!-- Recommend -->
-  <section class="section recommend">
+  <section class="section recommend" id="recommend">
     <h2 class="title">Recommend<span>,</span></h2>
     <ul class="tags">
       <li><a href="#">#istek</a></li>
@@ -84,7 +119,7 @@
   </section>
 
   <!-- After Service -->
-  <section class="section service">
+  <section class="section service" id="service">
     <h2 class="title">After Service<span>,</span></h2>
     <p class="service__desc">도움이 필요하세요? 언제나 최선을 다하겠습니다.</p>
     <ul class="service-list">
@@ -111,5 +146,6 @@
     <hr>
   </footer>
 
+  <script src="js/script.js"></script>
 </body>
 </html>
