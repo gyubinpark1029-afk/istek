@@ -33,12 +33,15 @@ language plpgsql
 security definer set search_path = ''
 as $$
 begin
-  insert into public.users (auth_id, name, email, phone)
+  insert into public.users (auth_id, name, email, phone, zipcode, address, address_detail)
   values (
     new.id,
     new.raw_user_meta_data ->> 'name',
     new.email,
-    new.raw_user_meta_data ->> 'phone'
+    new.raw_user_meta_data ->> 'phone',
+    new.raw_user_meta_data ->> 'zipcode',
+    new.raw_user_meta_data ->> 'address',
+    new.raw_user_meta_data ->> 'address_detail'
   );
   return new;
 end;

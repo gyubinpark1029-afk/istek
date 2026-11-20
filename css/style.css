@@ -395,3 +395,5 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 .addr-btn { padding: 0 18px; border: 1px solid var(--blue); background: #fff; color: var(--blue); font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
 .addr-btn:hover { background: var(--blue); color: #fff; }
 .field input[readonly] { background: #f7f8fb; cursor: pointer; }
+.addr-btn { border-radius: 8px; }
+.my-profile .addr-btn { border-radius: 0; } /* 회원 정보 수정은 각진 스타일 */

@@ -31,6 +31,10 @@
       if (!v) return '전화번호를 입력해 주세요.';
       if (!/^01[0-9]-?\d{3,4}-?\d{4}$/.test(v)) return '전화번호 형식이 올바르지 않습니다. (예: 010-1234-5678)';
       return '';
+    },
+    // 주소는 선택 항목: 상세 주소만 쓰고 검색을 안 한 경우만 막기
+    addressDetail: function (v) {
+      return v && !form.address.value ? '주소 검색으로 기본 주소를 먼저 선택해 주세요.' : '';
     }
   };
 
@@ -58,6 +62,28 @@
       : d.length < 8 ? d.slice(0, 3) + '-' + d.slice(3)
       : d.slice(0, 3) + '-' + d.slice(3, d.length - 4) + '-' + d.slice(-4);
   });
+
+  // 주소 검색 (카카오 우편번호 서비스)
+  function openPostcode() {
+    if (!window.daum || !daum.Postcode) {
+      alert('주소 검색을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+      return;
+    }
+    new daum.Postcode({
+      oncomplete: function (data) {
+        var addr = data.roadAddress || data.jibunAddress;
+        if (data.buildingName) addr += ' (' + data.buildingName + ')';
+        form.zipcode.value = data.zonecode;
+        form.address.value = addr;
+        form.addressDetail.value = '';
+        check('addressDetail');
+        form.addressDetail.focus();
+      }
+    }).open();
+  }
+  document.getElementById('addrSearch').addEventListener('click', openPostcode);
+  form.zipcode.addEventListener('click', openPostcode);
+  form.address.addEventListener('click', openPostcode);
 
   // 약관 전체 동의
   agreeAll.addEventListener('change', function () {
@@ -111,7 +137,10 @@
       options: {
         data: {
           name: form.userName.value.trim(),
-          phone: form.phone.value.trim()
+          phone: form.phone.value.trim(),
+          zipcode: form.zipcode.value,
+          address: form.address.value,
+          address_detail: form.addressDetail.value.trim()
         },
         // 인증 메일의 링크를 누르면 돌아올 주소
         emailRedirectTo: new URL('login.html', location.href).href
