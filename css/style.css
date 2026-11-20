@@ -320,3 +320,8 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 
 /* 푸터 없는 페이지(로그인, 회원가입, 비밀번호 찾기): 아래 여백 */
 .join--alone { padding-bottom: 120px; }
+
+/* 헤더 없는 페이지: 상단 로고 (누르면 메인으로) */
+.join--alone { padding-top: 80px; }
+.join__logo { display: inline-block; margin-bottom: 48px; }
+.join__logo img { height: 48px; width: auto; }

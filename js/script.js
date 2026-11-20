@@ -3,6 +3,7 @@
   var closeBtn = document.getElementById('menuClose');
   var drawer = document.getElementById('drawer');
   var overlay = document.getElementById('overlay');
+  if (!drawer) return; // 헤더/메뉴가 없는 페이지 (로그인 등)
 
   function openMenu() {
     drawer.classList.add('is-open');
@@ -48,7 +49,9 @@
       document.body.classList.remove('menu-open');
     });
   });
+})();
 
+(function () {
   // TOP 버튼: 조금 스크롤하면 나타나고, 누르면 맨 위로
   var topBtn = document.getElementById('topBtn');
   function toggleTop() {
