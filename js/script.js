@@ -62,6 +62,7 @@
 
   // Recommend: #브랜드를 누르면 그 브랜드의 제품만 보여주기
   var productList = document.getElementById('productList');
+  if (!productList) return; // 메인 페이지가 아니면 건너뛰기
   var tags = document.querySelectorAll('.tag');
 
   function renderProducts(brand) {
