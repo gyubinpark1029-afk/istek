@@ -19,6 +19,30 @@
     document.getElementById('infoDate').textContent = new Date(info.created_at).toLocaleDateString('ko-KR');
   }
 
+  // 총주문(취소·반품 제외)과 최근 3개월 주문처리 현황
+  function loadOrders() {
+    return supabaseClient.from('orders').select('status, total_price, created_at')
+      .then(function (res) {
+        if (res.error) return; // 주문 테이블이 아직 없으면 0 그대로 표시
+        var since = new Date();
+        since.setMonth(since.getMonth() - 3);
+
+        var sum = 0, times = 0, counts = {};
+        res.data.forEach(function (o) {
+          if (o.status !== '취소' && o.status !== '반품') {
+            sum += o.total_price;
+            times += 1;
+          }
+          if (new Date(o.created_at) >= since) counts[o.status] = (counts[o.status] || 0) + 1;
+        });
+
+        document.getElementById('infoTotal').textContent = sum.toLocaleString('ko-KR') + '원(' + times + '회)';
+        document.querySelectorAll('[data-status]').forEach(function (e) {
+          e.textContent = counts[e.dataset.status] || 0;
+        });
+      });
+  }
+
   // 로그인 확인 → users 테이블에서 내 정보 불러오기
   supabaseClient.auth.getSession().then(function (res) {
     var session = res.data.session;
@@ -39,6 +63,7 @@
           created_at: user.created_at
         });
         body.hidden = false;
+        return loadOrders();
       });
   }).catch(function (err) {
     hello.textContent = '정보를 불러오지 못했습니다. (' + err.message + ')';

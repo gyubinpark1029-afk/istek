@@ -75,3 +75,27 @@ drop trigger if exists on_auth_user_updated on auth.users;
 create trigger on_auth_user_updated
   after update of raw_user_meta_data, email on auth.users
   for each row execute function public.handle_user_updated();
+
+-- 주문 (orders 테이블)
+-- 아직 주문하기 기능이 없어서, 테스트할 때는 Supabase에서 직접 넣어야 함
+-- 회원은 자기 주문만 볼 수 있고, 사이트에서 주문을 만들거나 고칠 수는 없음
+create table if not exists public.orders (
+  id           bigint generated always as identity primary key,
+  order_no     text not null unique,                 -- 주문번호 (예: 20261120-0000001)
+  auth_id      uuid not null references auth.users (id) on delete cascade,  -- 주문한 회원
+  status       text not null default '입금전'         -- 주문처리상태
+               check (status in ('입금전', '배송준비중', '배송중', '배송완료', '취소', '교환', '반품')),
+  items        jsonb not null default '[]',          -- 상품 목록: [{"name": "상품명", "price": 448000, "qty": 1, "image": ""}]
+  total_price  integer not null default 0,           -- 총 결제금액 (원)
+  created_at   timestamptz not null default now()    -- 주문일
+);
+
+create index if not exists orders_auth_id_created_at on public.orders (auth_id, created_at desc);
+
+alter table public.orders enable row level security;
+
+drop policy if exists "본인 주문만 조회" on public.orders;
+create policy "본인 주문만 조회"
+  on public.orders for select
+  to authenticated
+  using (auth.uid() = auth_id);

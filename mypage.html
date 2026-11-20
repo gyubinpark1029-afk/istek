@@ -83,24 +83,22 @@
           <div><dt>가입일</dt><dd id="infoDate"></dd></div>
         </dl>
         <dl>
-          <!-- TODO: 주문 기능이 생기면 실제 값으로 교체 -->
-          <div><dt>총주문</dt><dd>0원(0회)</dd></div>
+          <div><dt>총주문</dt><dd id="infoTotal">0원(0회)</dd></div>
         </dl>
       </div>
 
       <!-- 나의 주문처리 현황 -->
       <div class="my-orders">
         <h3>나의 주문처리 현황 <small>(최근 3개월 기준)</small></h3>
-        <!-- TODO: 주문 기능이 생기면 실제 값으로 교체 -->
         <ul class="my-orders__steps">
-          <li><strong>입금전</strong><span>0</span></li>
-          <li><strong>배송준비중</strong><span>0</span></li>
-          <li><strong>배송중</strong><span>0</span></li>
-          <li><strong>배송완료</strong><span>0</span></li>
+          <li><strong>입금전</strong><span data-status="입금전">0</span></li>
+          <li><strong>배송준비중</strong><span data-status="배송준비중">0</span></li>
+          <li><strong>배송중</strong><span data-status="배송중">0</span></li>
+          <li><strong>배송완료</strong><span data-status="배송완료">0</span></li>
           <li class="my-orders__etc">
-            <p>취소 : <b>0</b></p>
-            <p>교환 : <b>0</b></p>
-            <p>반품 : <b>0</b></p>
+            <p>취소 : <b data-status="취소">0</b></p>
+            <p>교환 : <b data-status="교환">0</b></p>
+            <p>반품 : <b data-status="반품">0</b></p>
           </li>
         </ul>
       </div>
@@ -108,7 +106,7 @@
       <!-- 메뉴 -->
       <ul class="my-menu">
         <li>
-          <a href="#" data-soon>
+          <a href="orders.html">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M28 42H10a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h18l8 8v10"/><path d="M28 6v8h8"/><path d="M14 22h12M14 28h8M14 34h5"/><circle cx="32" cy="33" r="6"/><path d="M36.5 37.5L41 42"/></svg>
             <strong>Order</strong>
             <em>주문내역 조회</em>
