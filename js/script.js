@@ -102,9 +102,19 @@
       price.className = 'product__price';
       price.textContent = p.price.toLocaleString('ko-KR') + '원';
 
+      var addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'product__cart';
+      addBtn.textContent = '장바구니 담기';
+      addBtn.addEventListener('click', function () {
+        Cart.add(p.id, 1);
+        if (confirm('장바구니에 담았습니다.\n장바구니로 이동할까요?')) location.href = 'cart.html';
+      });
+
       li.appendChild(img);
       li.appendChild(name);
       li.appendChild(price);
+      li.appendChild(addBtn);
       productList.appendChild(li);
     });
   }
