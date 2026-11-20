@@ -165,6 +165,14 @@
       });
   });
 
+  // 아직 없는 메뉴 (Order, Wishlist)
+  document.querySelectorAll('[data-soon]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      alert('준비 중인 기능입니다.');
+    });
+  });
+
   document.getElementById('logoutBtn').addEventListener('click', function () {
     supabaseClient.auth.signOut();
   });
