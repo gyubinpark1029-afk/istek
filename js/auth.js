@@ -24,10 +24,10 @@ if (window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
       var name = (user.user_metadata && user.user_metadata.name) || user.email;
       nameLink.textContent = name + '님';
       nameLink.hidden = false;
-      icon.setAttribute('aria-label', '내 정보');
+      icon.hidden = true; // 로그인 후에는 사람 아이콘 숨기고 이름만 표시
     } else {
       nameLink.hidden = true;
-      icon.setAttribute('aria-label', '로그인');
+      icon.hidden = false;
     }
   }
 

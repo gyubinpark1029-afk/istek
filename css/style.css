@@ -335,3 +335,4 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 .mypage__info dt { width: 100px; flex-shrink: 0; color: #888; }
 .mypage__info dd { word-break: break-all; }
 .field__msg.is-ok { color: #2b8a3e; }
+.icon[hidden] { display: none; }
