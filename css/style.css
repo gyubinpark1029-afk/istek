@@ -325,3 +325,13 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 .join--alone { padding-top: 80px; }
 .join__logo { display: inline-block; margin-bottom: 48px; }
 .join__logo img { height: 48px; width: auto; }
+
+/* ---------- 마이페이지 ---------- */
+.join__desc strong { color: var(--blue); }
+.mypage__box { margin-top: 40px; padding: 32px; border: 1px solid #e3e5ea; border-radius: 16px; }
+.mypage__title { margin-bottom: 24px; font-size: 20px; font-weight: 700; }
+.mypage__info > div { display: flex; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-size: 16px; }
+.mypage__info > div:last-child { border-bottom: 0; }
+.mypage__info dt { width: 100px; flex-shrink: 0; color: #888; }
+.mypage__info dd { word-break: break-all; }
+.field__msg.is-ok { color: #2b8a3e; }

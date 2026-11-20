@@ -52,7 +52,9 @@
     supabaseClient.auth.signInWithPassword({ email: email, password: password })
       .then(function (res) {
         if (res.error) throw res.error;
-        location.href = 'index.html';
+        // 마이페이지 등에서 넘어왔으면 그 페이지로 돌아가기
+        var next = new URLSearchParams(location.search).get('next');
+        location.href = /^[a-z]+\.html$/.test(next) ? next : 'index.html';
       })
       .catch(function (err) {
         if (/invalid login credentials/i.test(err.message)) {

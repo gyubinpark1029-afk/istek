@@ -43,3 +43,24 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- 마이페이지에서 이름/전화번호(또는 이메일)를 바꾸면 users 테이블에도 자동 반영
+create or replace function public.handle_user_updated()
+returns trigger
+language plpgsql
+security definer set search_path = ''
+as $$
+begin
+  update public.users
+  set name  = coalesce(new.raw_user_meta_data ->> 'name', name),
+      phone = coalesce(new.raw_user_meta_data ->> 'phone', phone),
+      email = new.email
+  where auth_id = new.id;
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_updated on auth.users;
+create trigger on_auth_user_updated
+  after update of raw_user_meta_data, email on auth.users
+  for each row execute function public.handle_user_updated();

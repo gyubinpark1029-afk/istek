@@ -17,6 +17,8 @@ if (window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
   icon.parentNode.insertBefore(nameLink, icon);
 
   function update(session) {
+    // 로그인했으면 마이페이지, 아니면 로그인 화면으로
+    icon.href = nameLink.href = session ? 'mypage.html' : 'login.html';
     if (session) {
       var user = session.user;
       var name = (user.user_metadata && user.user_metadata.name) || user.email;
