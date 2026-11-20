@@ -317,3 +317,6 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 /* ---------- 헤더: 로그인한 사용자 이름 ---------- */
 .header__name { font-size: 15px; font-weight: 500; color: var(--blue); white-space: nowrap; }
 .header__name[hidden] { display: none; }
+
+/* 푸터 없는 페이지(로그인, 회원가입, 비밀번호 찾기): 아래 여백 */
+.join--alone { padding-bottom: 120px; }
