@@ -91,6 +91,16 @@
             <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-0000-0000">
             <p class="field__msg"></p>
           </div>
+          <div class="field">
+            <label for="addressDetail">주소</label>
+            <div class="addr-row">
+              <input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly>
+              <button type="button" class="addr-btn" id="addrSearch">주소 검색</button>
+            </div>
+            <input type="text" id="address" name="address" placeholder="기본 주소" readonly>
+            <input type="text" id="addressDetail" name="addressDetail" placeholder="상세 주소 (동, 호수 등)" autocomplete="address-line2">
+            <p class="field__msg"></p>
+          </div>
           <p class="field__msg join-form__error" id="profileMsg" role="alert"></p>
           <button type="submit" class="join-form__submit">저장</button>
         </form>
@@ -148,6 +158,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
   <script src="js/supabase-config.js"></script>
   <script src="js/auth.js"></script>
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="js/profile.js"></script>
   <script src="js/script.js"></script>
 </body>

@@ -387,3 +387,11 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 .my-profile .field input { height: 44px; border-radius: 0; font-size: 15px; }
 .my-profile .join-form__error { margin: 16px 0 0; text-align: left; }
 .my-profile .join-form__submit { width: 160px; height: 44px; margin-top: 24px; border-radius: 0; font-size: 15px; }
+
+/* 주소 입력 (회원 정보 수정) */
+.addr-row { display: flex; gap: 8px; }
+.field .addr-row input { width: 160px; flex: none; }
+.field .addr-row ~ input { margin-top: 8px; }
+.addr-btn { padding: 0 18px; border: 1px solid var(--blue); background: #fff; color: var(--blue); font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+.addr-btn:hover { background: var(--blue); color: #fff; }
+.field input[readonly] { background: #f7f8fb; cursor: pointer; }

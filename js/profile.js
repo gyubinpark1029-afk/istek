@@ -37,12 +37,15 @@
     }
     currentUser = session.user;
 
-    return supabaseClient.from('users').select('name, phone').maybeSingle()
+    return supabaseClient.from('users').select('name, phone, zipcode, address, address_detail').maybeSingle()
       .then(function (r) {
         var meta = currentUser.user_metadata || {};
-        var info = r.data || { name: meta.name, phone: meta.phone };
+        var info = r.data || meta;
         profileForm.userName.value = info.name || '';
         profileForm.phone.value = info.phone || '';
+        profileForm.zipcode.value = info.zipcode || '';
+        profileForm.address.value = info.address || '';
+        profileForm.addressDetail.value = info.address_detail || '';
         body.hidden = false;
       });
   }).catch(function (err) {
@@ -62,6 +65,27 @@
       : d.slice(0, 3) + '-' + d.slice(3, d.length - 4) + '-' + d.slice(-4);
   });
 
+  // 주소 검색 (다음 우편번호 서비스)
+  function openPostcode() {
+    if (!window.daum || !daum.Postcode) {
+      alert('주소 검색을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+      return;
+    }
+    new daum.Postcode({
+      oncomplete: function (data) {
+        var addr = data.roadAddress || data.jibunAddress;
+        if (data.buildingName) addr += ' (' + data.buildingName + ')';
+        profileForm.zipcode.value = data.zonecode;
+        profileForm.address.value = addr;
+        profileForm.addressDetail.value = '';
+        profileForm.addressDetail.focus();
+      }
+    }).open();
+  }
+  document.getElementById('addrSearch').addEventListener('click', openPostcode);
+  profileForm.zipcode.addEventListener('click', openPostcode);
+  profileForm.address.addEventListener('click', openPostcode);
+
   // 정보 수정: 로그인 정보(user_metadata)를 바꾸면 DB 트리거가 users 테이블도 함께 수정
   profileForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -69,17 +93,26 @@
 
     var name = profileForm.userName.value.trim();
     var phone = profileForm.phone.value.trim();
+    var zipcode = profileForm.zipcode.value;
+    var address = profileForm.address.value;
+    var addressDetail = profileForm.addressDetail.value.trim();
     var nameError = name ? '' : '이름을 입력해 주세요.';
     var phoneError = !phone ? '전화번호를 입력해 주세요.'
       : !/^01[0-9]-?\d{3,4}-?\d{4}$/.test(phone) ? '전화번호 형식이 올바르지 않습니다. (예: 010-1234-5678)' : '';
+    // 주소는 선택 항목: 상세 주소만 쓰고 검색을 안 한 경우만 막기
+    var addressError = addressDetail && !address ? '주소 검색으로 기본 주소를 먼저 선택해 주세요.' : '';
     setMsg(profileForm.userName, nameError);
     setMsg(profileForm.phone, phoneError);
+    setMsg(profileForm.addressDetail, addressError);
     if (nameError) return profileForm.userName.focus();
     if (phoneError) return profileForm.phone.focus();
+    if (addressError) return openPostcode();
 
     var btn = profileForm.querySelector('.join-form__submit');
     busy(btn, true);
-    supabaseClient.auth.updateUser({ data: { name: name, phone: phone } }).then(function (res) {
+    supabaseClient.auth.updateUser({
+      data: { name: name, phone: phone, zipcode: zipcode, address: address, address_detail: addressDetail }
+    }).then(function (res) {
       if (res.error) throw res.error;
       setResult(profileMsg, '저장되었습니다.', true);
     }).catch(function (err) {

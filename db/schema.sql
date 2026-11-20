@@ -12,6 +12,11 @@ create table if not exists public.users (
   created_at  timestamptz not null default now()                -- 가입일
 );
 
+-- 주소 (회원 정보 수정 페이지에서 입력, 선택 항목)
+alter table public.users add column if not exists zipcode text;         -- 우편번호
+alter table public.users add column if not exists address text;         -- 기본 주소
+alter table public.users add column if not exists address_detail text;  -- 상세 주소
+
 -- 보안: 로그인한 본인 정보만 볼 수 있게
 alter table public.users enable row level security;
 
@@ -44,7 +49,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
--- 마이페이지에서 이름/전화번호(또는 이메일)를 바꾸면 users 테이블에도 자동 반영
+-- 회원 정보 수정 페이지에서 이름/전화번호/주소(또는 이메일)를 바꾸면 users 테이블에도 자동 반영
 create or replace function public.handle_user_updated()
 returns trigger
 language plpgsql
@@ -54,6 +59,9 @@ begin
   update public.users
   set name  = coalesce(new.raw_user_meta_data ->> 'name', name),
       phone = coalesce(new.raw_user_meta_data ->> 'phone', phone),
+      zipcode = coalesce(new.raw_user_meta_data ->> 'zipcode', zipcode),
+      address = coalesce(new.raw_user_meta_data ->> 'address', address),
+      address_detail = coalesce(new.raw_user_meta_data ->> 'address_detail', address_detail),
       email = new.email
   where auth_id = new.id;
   return new;
