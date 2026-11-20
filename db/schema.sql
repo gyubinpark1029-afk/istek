@@ -20,6 +20,9 @@ alter table public.users add column if not exists address_detail text;  -- 상�
 -- 보안: 로그인한 본인 정보만 볼 수 있게
 alter table public.users enable row level security;
 
+-- 로그인한 회원이 사이트에서 읽을 수 있게 권한 부여 (어떤 줄을 볼지는 아래 정책이 제한)
+grant select on public.users to authenticated;
+
 drop policy if exists "본인 정보만 조회" on public.users;
 create policy "본인 정보만 조회"
   on public.users for select
@@ -93,6 +96,8 @@ create table if not exists public.orders (
 create index if not exists orders_auth_id_created_at on public.orders (auth_id, created_at desc);
 
 alter table public.orders enable row level security;
+
+grant select on public.orders to authenticated;
 
 drop policy if exists "본인 주문만 조회" on public.orders;
 create policy "본인 주문만 조회"
