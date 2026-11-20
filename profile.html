@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 정보 수정 | istek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header__left">
+      <button type="button" class="hamburger" id="menuOpen" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <a href="index.html" class="header__logo" aria-label="istek 홈"><img src="images/logo.svg" alt="istek"></a>
+    <div class="header__right">
+      <a href="#" class="icon" aria-label="검색">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </a>
+      <a href="#" class="icon" aria-label="장바구니">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.5l2.2 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
+      </a>
+      <a href="login.html" class="icon" aria-label="로그인">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 사이드 메뉴 -->
+  <div class="overlay" id="overlay"></div>
+  <nav class="drawer" id="drawer" aria-label="메인 메뉴" aria-hidden="true">
+    <div class="drawer__head">
+      <img src="images/logo.svg" alt="istek">
+      <button type="button" class="drawer__close" id="menuClose" aria-label="메뉴 닫기">
+        <span></span><span></span>
+      </button>
+    </div>
+    <ul class="menu">
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">브랜드별<i></i></button>
+        <div class="menu__sub"><ul>
+          <li><a href="#">istek</a></li>
+          <li><a href="#">HUMAS</a></li>
+          <li><a href="#">miraest</a></li>
+          <li><a href="#">evergreenTop</a></li>
+          <li><a href="#">analytik-jena</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">제품 카테고리<i></i></button>
+        <div class="menu__sub"><ul>
+          <!-- TODO: 실제 카테고리로 교체 -->
+          <li><a href="#">카테고리 1</a></li>
+          <li><a href="#">카테고리 2</a></li>
+          <li><a href="#">카테고리 3</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">견적 문의</a></li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">고객지원</a></li>
+      <li class="menu__item"><a class="menu__link" href="#">회사소개 / 오시는 길</a></li>
+    </ul>
+  </nav>
+
+  <!-- 회원 정보 수정 -->
+  <section class="section profile-page">
+    <h2 class="my-title">회원 정보 수정</h2>
+    <p class="join__desc">회원이신 고객님의 개인정보를 관리하는 공간입니다.</p>
+
+    <div id="myBody" hidden>
+      <div class="my-actions"><a href="mypage.html" class="my-logout">마이페이지로</a></div>
+
+      <div class="my-profile">
+        <div class="my-profile__cols">
+        <form id="profileForm" novalidate>
+          <h4 class="my-profile__title">기본 정보</h4>
+          <div class="field">
+            <label for="userName">이름</label>
+            <input type="text" id="userName" name="userName" autocomplete="name">
+            <p class="field__msg"></p>
+          </div>
+          <div class="field">
+            <label for="phone">전화번호</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-0000-0000">
+            <p class="field__msg"></p>
+          </div>
+          <p class="field__msg join-form__error" id="profileMsg" role="alert"></p>
+          <button type="submit" class="join-form__submit">저장</button>
+        </form>
+
+        <form id="passwordForm" novalidate>
+          <h4 class="my-profile__title">비밀번호 변경</h4>
+          <div class="field">
+            <label for="currentPassword">현재 비밀번호</label>
+            <input type="password" id="currentPassword" name="currentPassword" autocomplete="current-password">
+            <p class="field__msg"></p>
+          </div>
+          <div class="field">
+            <label for="password">새 비밀번호</label>
+            <input type="password" id="password" name="password" autocomplete="new-password" placeholder="영문, 숫자, 특수문자 포함 8자 이상">
+            <p class="field__msg"></p>
+          </div>
+          <div class="field">
+            <label for="passwordConfirm">새 비밀번호 확인</label>
+            <input type="password" id="passwordConfirm" name="passwordConfirm" autocomplete="new-password">
+            <p class="field__msg"></p>
+          </div>
+          <p class="field__msg join-form__error" id="passwordMsg" role="alert"></p>
+          <button type="submit" class="join-form__submit">비밀번호 변경</button>
+        </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <img class="footer__logo" src="images/logo.svg" alt="istek">
+      <div class="footer__info">
+        <p><b>상호명</b> 이스텍 <b class="gap">대표</b> 박도홍(istek1202@hanmail.net)</p>
+        <!-- TODO: 사업자등록번호 확인 후 추가 -->
+        <p><b>전화</b> (051) 581-4303</p>
+        <p><b>주소</b> 46217 부산광역시 금정구 정룡로 57, 4층</p>
+        <p><b>H.P</b> 010-4593-4944</p>
+        <p><b>FAX</b> (051) 515-7869</p>
+        <p><b>마케팅 문의</b> gyubin1029@naver.com</p>
+        <p class="footer__links"><a href="#">이용약관</a><a href="#">개인정보취급방침</a><a href="#">사업자 정보확인</a></p>
+      </div>
+    </div>
+    <hr>
+  </footer>
+
+  <!-- TOP 버튼 -->
+  <button type="button" class="top-btn" id="topBtn" aria-label="맨 위로">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/></svg>
+    <span>TOP</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

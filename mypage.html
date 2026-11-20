@@ -116,7 +116,7 @@
           </a>
         </li>
         <li>
-          <a href="#profile">
+          <a href="profile.html">
             <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="38" height="28" rx="3"/><circle cx="17" cy="21" r="4"/><path d="M10 32c1-4 4-6 7-6s6 2 7 6"/><path d="M29 20h8M29 26h8M29 32h5"/></svg>
             <strong>Profile</strong>
             <em>회원 정보</em>
@@ -133,48 +133,8 @@
         </li>
       </ul>
 
-      <!-- 회원 정보 수정 (Profile) -->
-      <div class="my-profile" id="profile">
-        <form class="join-form mypage__box" id="profileForm" novalidate>
-          <h3 class="mypage__title">정보 수정</h3>
-          <div class="field">
-            <label for="userName">이름</label>
-            <input type="text" id="userName" name="userName" autocomplete="name">
-            <p class="field__msg"></p>
-          </div>
-          <div class="field">
-            <label for="phone">전화번호</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-0000-0000">
-            <p class="field__msg"></p>
-          </div>
-          <p class="field__msg join-form__error" id="profileMsg" role="alert"></p>
-          <button type="submit" class="join-form__submit">저장</button>
-        </form>
-
-        <form class="join-form mypage__box" id="passwordForm" novalidate>
-          <h3 class="mypage__title">비밀번호 변경</h3>
-          <div class="field">
-            <label for="currentPassword">현재 비밀번호</label>
-            <input type="password" id="currentPassword" name="currentPassword" autocomplete="current-password">
-            <p class="field__msg"></p>
-          </div>
-          <div class="field">
-            <label for="password">새 비밀번호</label>
-            <input type="password" id="password" name="password" autocomplete="new-password" placeholder="영문, 숫자, 특수문자 포함 8자 이상">
-            <p class="field__msg"></p>
-          </div>
-          <div class="field">
-            <label for="passwordConfirm">새 비밀번호 확인</label>
-            <input type="password" id="passwordConfirm" name="passwordConfirm" autocomplete="new-password">
-            <p class="field__msg"></p>
-          </div>
-          <p class="field__msg join-form__error" id="passwordMsg" role="alert"></p>
-          <button type="submit" class="join-form__submit">비밀번호 변경</button>
-        </form>
-
-        <div class="my-logout">
-          <button type="button" class="join-form__sub" id="logoutBtn">로그아웃</button>
-        </div>
+      <div class="my-logout-wrap">
+        <button type="button" class="join-form__sub" id="logoutBtn">로그아웃</button>
       </div>
     </div>
   </section>
