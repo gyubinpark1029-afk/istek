@@ -311,3 +311,9 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
 }
 .login-done__msg { text-align: center; font-size: 20px; }
 .login-done__msg strong { color: var(--blue); }
+.join-form__alt--sub { margin-top: 10px; }
+.join-form__alt--sub a { color: #888; font-weight: 400; }
+
+/* ---------- 헤더: 로그인한 사용자 이름 ---------- */
+.header__name { font-size: 15px; font-weight: 500; color: var(--blue); white-space: nowrap; }
+.header__name[hidden] { display: none; }

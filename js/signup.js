@@ -96,11 +96,6 @@
   // Supabase로 회원가입
   // 이메일/비밀번호 → Supabase Auth, 이름/전화번호 → users 테이블 (db/schema.sql 의 트리거가 자동 저장)
   var submitBtn = form.querySelector('.join-form__submit');
-  var supabaseClient = null;
-  if (window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
-
   function signUp() {
     if (!supabaseClient) {
       alert('회원가입 서버 연결 준비 중입니다. (js/supabase-config.js 설정 필요)');

@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비밀번호 찾기 | istek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header__left">
+      <button type="button" class="hamburger" id="menuOpen" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <a href="index.html" class="header__logo" aria-label="istek 홈"><img src="images/logo.svg" alt="istek"></a>
+    <div class="header__right">
+      <a href="#" class="icon" aria-label="검색">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </a>
+      <a href="#" class="icon" aria-label="장바구니">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.5l2.2 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
+      </a>
+      <a href="login.html" class="icon" aria-label="로그인">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 사이드 메뉴 -->
+  <div class="overlay" id="overlay"></div>
+  <nav class="drawer" id="drawer" aria-label="메인 메뉴" aria-hidden="true">
+    <div class="drawer__head">
+      <img src="images/logo.svg" alt="istek">
+      <button type="button" class="drawer__close" id="menuClose" aria-label="메뉴 닫기">
+        <span></span><span></span>
+      </button>
+    </div>
+    <ul class="menu">
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">브랜드별<i></i></button>
+        <div class="menu__sub"><ul>
+          <li><a href="#">istek</a></li>
+          <li><a href="#">HUMAS</a></li>
+          <li><a href="#">miraest</a></li>
+          <li><a href="#">evergreenTop</a></li>
+          <li><a href="#">analytik-jena</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">제품 카테고리<i></i></button>
+        <div class="menu__sub"><ul>
+          <!-- TODO: 실제 카테고리로 교체 -->
+          <li><a href="#">카테고리 1</a></li>
+          <li><a href="#">카테고리 2</a></li>
+          <li><a href="#">카테고리 3</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">견적 문의</a></li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">고객지원</a></li>
+      <li class="menu__item"><a class="menu__link" href="#">회사소개 / 오시는 길</a></li>
+    </ul>
+  </nav>
+
+  <!-- 비밀번호 찾기 -->
+  <section class="section join">
+    <h2 class="title">Password<span>,</span></h2>
+    <p class="join__desc" id="resetDesc">가입하신 이메일을 입력하시면 비밀번호 재설정 링크를 보내 드립니다.</p>
+
+    <!-- 1단계: 재설정 메일 요청 -->
+    <form class="join-form" id="requestForm" novalidate>
+      <div class="field">
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" autocomplete="username">
+        <p class="field__msg"></p>
+      </div>
+      <p class="field__msg join-form__error" id="requestMsg" role="alert"></p>
+      <button type="submit" class="join-form__submit">재설정 메일 받기</button>
+      <p class="join-form__alt"><a href="login.html">로그인으로 돌아가기</a></p>
+    </form>
+
+    <!-- 메일 발송 완료 -->
+    <div class="join-form login-done" id="sentDone" hidden>
+      <p class="login-done__msg"><strong id="sentEmail"></strong>(으)로<br>재설정 메일을 보냈습니다.</p>
+      <p class="join-form__alt">메일이 오지 않으면 스팸함을 확인하거나, 가입한 이메일이 맞는지 확인해 주세요.</p>
+      <a href="login.html" class="join-form__submit">로그인으로</a>
+    </div>
+
+    <!-- 2단계: 메일의 링크로 들어온 경우 새 비밀번호 입력 -->
+    <form class="join-form" id="updateForm" novalidate hidden>
+      <div class="field">
+        <label for="password">새 비밀번호</label>
+        <input type="password" id="password" name="password" autocomplete="new-password" placeholder="영문, 숫자, 특수문자 포함 8자 이상">
+        <p class="field__msg"></p>
+      </div>
+      <div class="field">
+        <label for="passwordConfirm">새 비밀번호 확인</label>
+        <input type="password" id="passwordConfirm" name="passwordConfirm" autocomplete="new-password">
+        <p class="field__msg"></p>
+      </div>
+      <p class="field__msg join-form__error" id="updateMsg" role="alert"></p>
+      <button type="submit" class="join-form__submit">비밀번호 변경</button>
+    </form>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <img class="footer__logo" src="images/logo.svg" alt="istek">
+      <div class="footer__info">
+        <p><b>상호명</b> 이스텍 <b class="gap">대표</b> 박도홍(istek1202@hanmail.net)</p>
+        <!-- TODO: 사업자등록번호 확인 후 추가 -->
+        <p><b>전화</b> (051) 581-4303</p>
+        <p><b>주소</b> 46217 부산광역시 금정구 정룡로 57, 4층</p>
+        <p><b>H.P</b> 010-4593-4944</p>
+        <p><b>FAX</b> (051) 515-7869</p>
+        <p><b>마케팅 문의</b> gyubin1029@naver.com</p>
+        <p class="footer__links"><a href="#">이용약관</a><a href="#">개인정보취급방침</a><a href="#">사업자 정보확인</a></p>
+      </div>
+    </div>
+    <hr>
+  </footer>
+
+  <!-- TOP 버튼 -->
+  <button type="button" class="top-btn" id="topBtn" aria-label="맨 위로">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/></svg>
+    <span>TOP</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/reset.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

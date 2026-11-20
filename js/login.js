@@ -4,11 +4,6 @@
   var submitBtn = form.querySelector('.join-form__submit');
   var loginMsg = document.getElementById('loginMsg');
 
-  var supabaseClient = null;
-  if (window.supabase && SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  }
-
   // 로그인된 상태면 폼 대신 "OOO님, 로그인되어 있습니다" 표시
   function showLoggedIn(user) {
     var name = (user.user_metadata && user.user_metadata.name) || user.email;
