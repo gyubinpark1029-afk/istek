@@ -119,7 +119,7 @@
           phone: form.phone.value.trim()
         },
         // 인증 메일의 링크를 누르면 돌아올 주소
-        emailRedirectTo: new URL('index.html', location.href).href
+        emailRedirectTo: new URL('login.html', location.href).href
       }
     }).then(function (res) {
       if (res.error) throw res.error;
