@@ -80,8 +80,8 @@ create trigger on_auth_user_updated
   for each row execute function public.handle_user_updated();
 
 -- 주문 (orders 테이블)
--- 아직 주문하기 기능이 없어서, 테스트할 때는 Supabase에서 직접 넣어야 함
--- 회원은 자기 주문만 볼 수 있고, 사이트에서 주문을 만들거나 고칠 수는 없음
+-- 주문은 사이트의 주문서(checkout.html)에서 place_order 함수로 만들어짐 (맨 아래 참고)
+-- 회원은 자기 주문만 볼 수 있고, 주문을 직접 고칠 수는 없음
 create table if not exists public.orders (
   id           bigint generated always as identity primary key,
   order_no     text not null unique,                 -- 주문번호 (예: 20261120-0000001)
@@ -104,3 +104,87 @@ create policy "본인 주문만 조회"
   on public.orders for select
   to authenticated
   using (auth.uid() = auth_id);
+
+-- ---------- 주문하기 (checkout.html) ----------
+-- 배송 정보와 결제 방법
+alter table public.orders add column if not exists receiver_name  text;                         -- 받는 분
+alter table public.orders add column if not exists receiver_phone text;                         -- 받는 분 연락처
+alter table public.orders add column if not exists zipcode        text;                         -- 우편번호
+alter table public.orders add column if not exists address        text;                         -- 기본 주소
+alter table public.orders add column if not exists address_detail text;                         -- 상세 주소
+alter table public.orders add column if not exists memo           text;                         -- 배송 메모
+alter table public.orders add column if not exists payment_method text not null default '무통장입금';  -- 결제 방법
+alter table public.orders add column if not exists depositor      text;                         -- 입금자명
+
+-- 주문 만들기: 사이트는 이 함수로만 주문을 넣을 수 있음 (orders 테이블에 직접 쓰기 권한은 없음)
+-- 주문번호 생성, 총 결제금액 계산, 상태('입금전')는 서버에서 정하므로 사이트에서 바꿀 수 없음
+-- ※ 상품 가격은 아직 사이트(js/products.js)에서 보내 줌. 상품을 Supabase로 옮기면 여기서 가격을 직접 조회하도록 바꿀 것
+create or replace function public.place_order(
+  p_items          jsonb,   -- [{"id": "istek-1", "name": "상품명", "price": 448000, "qty": 1, "image": ""}]
+  p_receiver_name  text,
+  p_receiver_phone text,
+  p_zipcode        text,
+  p_address        text,
+  p_address_detail text,
+  p_memo           text,
+  p_depositor      text
+)
+returns text  -- 주문번호
+language plpgsql
+security definer set search_path = ''
+as $$
+declare
+  v_uid   uuid := auth.uid();
+  v_item  jsonb;
+  v_items jsonb := '[]'::jsonb;
+  v_total bigint := 0;
+  v_name  text;
+  v_price integer;
+  v_qty   integer;
+  v_id    bigint;
+  v_no    text;
+begin
+  if v_uid is null then
+    raise exception '로그인이 필요합니다.';
+  end if;
+
+  if jsonb_typeof(p_items) is distinct from 'array'
+     or jsonb_array_length(p_items) = 0 or jsonb_array_length(p_items) > 50 then
+    raise exception '주문할 상품이 올바르지 않습니다.';
+  end if;
+
+  for v_item in select value from jsonb_array_elements(p_items) loop
+    v_name  := nullif(trim(v_item ->> 'name'), '');
+    v_price := (v_item ->> 'price')::integer;
+    v_qty   := (v_item ->> 'qty')::integer;
+    if v_name is null or v_price is null or v_price < 0
+       or v_qty is null or v_qty < 1 or v_qty > 99 then
+      raise exception '주문할 상품이 올바르지 않습니다.';
+    end if;
+    v_items := v_items || jsonb_build_array(jsonb_build_object(
+      'id', v_item ->> 'id', 'name', v_name, 'price', v_price, 'qty', v_qty,
+      'image', coalesce(v_item ->> 'image', '')));
+    v_total := v_total + v_price::bigint * v_qty;
+  end loop;
+
+  if coalesce(trim(p_receiver_name), '') = '' or coalesce(trim(p_receiver_phone), '') = ''
+     or coalesce(trim(p_address), '') = '' or coalesce(trim(p_depositor), '') = '' then
+    raise exception '배송 정보를 모두 입력해 주세요.';
+  end if;
+
+  insert into public.orders (order_no, auth_id, items, total_price,
+                             receiver_name, receiver_phone, zipcode, address, address_detail, memo, depositor)
+  values (gen_random_uuid()::text, v_uid, v_items, v_total,
+          trim(p_receiver_name), trim(p_receiver_phone), p_zipcode, trim(p_address),
+          nullif(trim(p_address_detail), ''), nullif(left(trim(p_memo), 200), ''), trim(p_depositor))
+  returning id into v_id;
+
+  -- 주문번호: 한국 날짜 + 주문 번호 7자리 (예: 20261125-0000012)
+  v_no := to_char(now() at time zone 'Asia/Seoul', 'YYYYMMDD') || '-' || lpad(v_id::text, 7, '0');
+  update public.orders set order_no = v_no where id = v_id;
+  return v_no;
+end;
+$$;
+
+revoke execute on function public.place_order(jsonb, text, text, text, text, text, text, text) from public, anon;
+grant execute on function public.place_order(jsonb, text, text, text, text, text, text, text) to authenticated;

@@ -150,10 +150,15 @@
     render();
   });
 
-  // TODO: 주문서/결제 페이지가 생기면 연결
+  // 주문할 상품 id를 주문서(checkout.html)로 넘기기 (로그인 안 했으면 주문서가 로그인 화면으로 보냄)
   function order(list) {
     if (!list.length) return alert('주문할 상품을 선택해 주세요.');
-    alert('주문하기는 준비 중인 기능입니다.');
+    try {
+      sessionStorage.setItem('istek-checkout', JSON.stringify(list.map(function (it) { return it.product.id; })));
+    } catch (e) {
+      // 저장이 막히면 주문서에서 장바구니 전체를 주문 상품으로 사용
+    }
+    location.href = 'checkout.html';
   }
   document.getElementById('orderSelected').addEventListener('click', function () { order(selected()); });
   document.getElementById('orderAll').addEventListener('click', function () { order(items()); });

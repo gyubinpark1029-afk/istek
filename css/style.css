@@ -630,3 +630,38 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
   .cart-total { padding: 18px 16px; }
   .cart-total__buttons button { flex: 1; width: auto; height: 48px; font-size: 15px; }
 }
+
+/* ---------- 주문서 작성 ---------- */
+.checkout-box { margin-top: 20px; }
+.profile-page > form > .checkout-box:first-child { margin-top: 12px; }
+.checkout-box__body { padding: 24px 32px 28px; }
+.checkout-box .field { max-width: 560px; }
+.checkout-box .field label em { color: var(--point); font-style: normal; }
+.checkout-same { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; font-size: 15px; cursor: pointer; }
+.checkout-same input, .checkout-agree input { width: 18px; height: 18px; accent-color: var(--blue); }
+.checkout-bank { margin: -6px 0 20px; padding: 14px 16px; background: #f7f8fb; font-size: 14px; color: #555; }
+.checkout-info { padding: 12px 32px 16px; }
+.checkout-info > div { display: flex; gap: 20px; padding: 6px 0; font-size: 15px; }
+.checkout-info dt { width: 90px; flex-shrink: 0; color: #888; }
+.checkout-info dd { font-weight: 500; word-break: break-all; }
+.checkout-agree { display: flex; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e3e5ea; font-size: 15px; cursor: pointer; }
+.checkout-agree em { font-style: normal; font-size: 13px; color: var(--point); }
+.cart-total .join-form__error { margin: 12px 0 0; text-align: left; }
+.cart-total__buttons a { width: 220px; height: 52px; margin: 0; border-radius: 0; font-size: 16px; }
+a.join-form__sub { display: flex; align-items: center; justify-content: center; }
+.checkout-done { padding: 48px 32px 40px; text-align: center; }
+.checkout-done__title { margin-bottom: 24px; font-size: 22px; font-weight: 700; color: var(--blue); }
+.checkout-done .checkout-info { display: inline-block; padding: 16px 28px; border: 3px solid #f0f0f0; text-align: left; }
+.checkout-done .order-notice { text-align: center; }
+.checkout-done .cart-total__buttons { margin-top: 28px; }
+
+@media (max-width: 768px) {
+  .checkout-box__body { padding: 18px 16px 20px; }
+  .checkout-info { padding: 10px 16px 14px; }
+  .checkout-info > div { gap: 12px; font-size: 14px; }
+  .checkout-info dt { width: 72px; }
+  .checkout-agree { align-items: flex-start; font-size: 14px; }
+  .cart-total__buttons a { flex: 1; width: auto; height: 48px; font-size: 15px; }
+  .checkout-done { padding: 36px 16px 28px; }
+  .checkout-done .checkout-info { display: block; padding: 12px 14px; }
+}
