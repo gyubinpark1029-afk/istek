@@ -75,8 +75,6 @@
     var items = PRODUCTS.filter(function (p) { return p.brand === brand; });
 
     more.href = 'products.html?brand=' + encodeURIComponent(brand);
-    more.querySelector('.more-box__label').textContent = '#' + brand + ' 상품 더보기';
-    more.querySelector('.more-box__count').textContent = items.length ? '전체 ' + items.length + '개' : '';
 
     if (items.length === 0) {
       var empty = document.createElement('li');
