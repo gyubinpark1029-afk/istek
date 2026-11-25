@@ -6,6 +6,16 @@
  *   name  : 상품명
  *   price : 가격 (숫자)
  *   image : 이미지 경로 (예: "images/products/istek-1.jpg"), 비워두면 회색 박스
+ *
+ * 상품 상세 페이지(product.html?id=...)에 쓰이는 항목 (모두 선택, 없으면 빼도 됨)
+ *   images       : 추가 사진 목록 (예: ["images/products/istek-1-2.jpg"]), 대표 사진 아래 작은 사진으로 표시
+ *   summary      : 상품명 아래 한 줄 소개
+ *   specs        : 상품 정보 표 (예: [["모델명", "IS-100"], ["원산지", "대한민국"]]), 브랜드는 자동으로 들어감
+ *   description  : 상세 설명 글 (빈 줄로 문단 나누기, 예: "첫 문단\n\n둘째 문단")
+ *   detailImages : 상세 설명 아래에 차례로 넣을 긴 상세 이미지 목록
+ *
+ * 예) { id: 'istek-1', brand: 'istek', name: '제품명', price: 448000, image: 'images/products/istek-1.jpg',
+ *       summary: '한 줄 소개', specs: [['모델명', 'IS-100']], description: '설명...' }
  */
 var PRODUCTS = [
   { id: 'istek-1', brand: 'istek',         name: '[임시] istek 제품 1',         price: 448000, image: '' },

@@ -665,3 +665,64 @@ a.join-form__sub { display: flex; align-items: center; justify-content: center; 
   .checkout-done { padding: 36px 16px 28px; }
   .checkout-done .checkout-info { display: block; padding: 12px 14px; }
 }
+
+/* ---------- 상품 상세 ---------- */
+.product__link { display: block; }
+.product__link:hover .product__name { color: var(--blue); }
+a.cart-item__name { display: block; }
+a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
+
+.pd { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; text-align: left; }
+.pd__main .pd__img { width: 100%; aspect-ratio: 1 / 1; border-radius: 16px; object-fit: cover; }
+.pd__thumbs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.pd__thumbs button { padding: 0; border: 2px solid transparent; border-radius: 10px; background: none; cursor: pointer; overflow: hidden; }
+.pd__thumbs button.is-active { border-color: var(--blue); }
+.pd__thumb { display: block; width: 72px; height: 72px; object-fit: cover; }
+.pd__brand { font-size: 15px; font-weight: 500; color: var(--blue); }
+.pd__name { margin-top: 10px; font-size: 28px; font-weight: 700; line-height: 1.4; word-break: keep-all; }
+.pd__summary { margin-top: 12px; font-size: 16px; color: #555; }
+.pd__price { margin-top: 24px; padding-bottom: 24px; border-bottom: 1px solid #e3e5ea; font-size: 26px; font-weight: 700; letter-spacing: .5px; }
+.pd__meta { padding: 16px 0; border-bottom: 1px solid #e3e5ea; }
+.pd__meta > div { display: flex; gap: 20px; padding: 5px 0; font-size: 15px; }
+.pd__meta dt { width: 90px; flex-shrink: 0; color: #888; }
+.pd__qty-row { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; font-size: 15px; }
+.pd__total { display: flex; align-items: baseline; justify-content: space-between; margin-top: 20px; padding: 18px 20px; background: #f7f8fb; font-size: 15px; }
+.pd__total strong { font-size: 24px; color: var(--blue); }
+.pd__buttons { display: flex; gap: 12px; margin-top: 24px; }
+.pd__buttons button { flex: 1; height: 56px; margin: 0; }
+
+.pd-tabs { position: sticky; top: 70px; z-index: 5; display: flex; margin-top: 80px; border-bottom: 2px solid #333; background: #fff; }
+.pd-tabs a { flex: 1; padding: 16px 0; text-align: center; font-size: 16px; font-weight: 500; color: #555; }
+.pd-tabs a:hover { color: var(--blue); }
+.pd-section { margin-top: 32px; scroll-margin-top: 160px; }
+.pd-section__body { padding: 28px 32px; }
+.pd-section__text { font-size: 15px; line-height: 1.8; white-space: pre-line; }
+.pd-section__text + .pd-section__text { margin-top: 16px; }
+.pd-section__img { display: block; width: 100%; max-width: 860px; margin: 20px auto 0; }
+.pd-section__none { padding: 40px 0; text-align: center; font-size: 15px; color: #888; }
+.pd-guide { padding: 0; }
+.pd-guide dd { font-weight: 400; line-height: 1.6; }
+.pd-guide a { color: var(--blue); text-decoration: underline; }
+
+@media (max-width: 1024px) {
+  .pd { gap: 36px; }
+  .pd__name { font-size: 24px; }
+}
+
+@media (max-width: 768px) {
+  .pd { grid-template-columns: 1fr; gap: 24px; }
+  .pd__main .pd__img { border-radius: 12px; }
+  .pd__thumb { width: 60px; height: 60px; }
+  .pd__name { font-size: 21px; }
+  .pd__summary { font-size: 15px; }
+  .pd__price { margin-top: 16px; padding-bottom: 16px; font-size: 22px; }
+  .pd__meta > div { font-size: 14px; }
+  .pd__total { padding: 14px 16px; }
+  .pd__total strong { font-size: 20px; }
+  .pd__buttons button { height: 50px; font-size: 16px; }
+  .pd-tabs { top: 60px; margin-top: 48px; }
+  .pd-tabs a { padding: 13px 0; font-size: 14px; }
+  .pd-section { margin-top: 20px; scroll-margin-top: 120px; }
+  .pd-section__body { padding: 18px 16px; }
+  .pd-section__text { font-size: 14px; }
+}

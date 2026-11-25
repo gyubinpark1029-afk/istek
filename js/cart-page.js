@@ -72,7 +72,9 @@
       li.appendChild(img);
 
       var info = el('div', 'cart-item__info');
-      info.appendChild(el('p', 'cart-item__name', p.name));
+      var name = el('a', 'cart-item__name', p.name);
+      name.href = 'product.html?id=' + encodeURIComponent(p.id);
+      info.appendChild(name);
       info.appendChild(el('p', 'cart-item__unit', won(p.price)));
       li.appendChild(info);
 

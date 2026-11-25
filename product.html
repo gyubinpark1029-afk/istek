@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품 상세 | istek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header__left">
+      <button type="button" class="hamburger" id="menuOpen" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <a href="index.html" class="header__logo" aria-label="istek 홈"><img src="images/logo.svg" alt="istek"></a>
+    <div class="header__right">
+      <a href="#" class="icon" aria-label="검색">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </a>
+      <a href="cart.html" class="icon" aria-label="장바구니">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.5l2.2 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
+      </a>
+      <a href="login.html" class="icon" aria-label="로그인">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 사이드 메뉴 -->
+  <div class="overlay" id="overlay"></div>
+  <nav class="drawer" id="drawer" aria-label="메인 메뉴" aria-hidden="true">
+    <div class="drawer__head">
+      <img src="images/logo.svg" alt="istek">
+      <button type="button" class="drawer__close" id="menuClose" aria-label="메뉴 닫기">
+        <span></span><span></span>
+      </button>
+    </div>
+    <ul class="menu">
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">브랜드별<i></i></button>
+        <div class="menu__sub"><ul>
+          <li><a href="#">istek</a></li>
+          <li><a href="#">HUMAS</a></li>
+          <li><a href="#">miraest</a></li>
+          <li><a href="#">evergreenTop</a></li>
+          <li><a href="#">analytik-jena</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">제품 카테고리<i></i></button>
+        <div class="menu__sub"><ul>
+          <!-- TODO: 실제 카테고리로 교체 -->
+          <li><a href="#">카테고리 1</a></li>
+          <li><a href="#">카테고리 2</a></li>
+          <li><a href="#">카테고리 3</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">견적 문의</a></li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">고객지원</a></li>
+      <li class="menu__item"><a class="menu__link" href="#">회사소개 / 오시는 길</a></li>
+    </ul>
+  </nav>
+
+  <!-- 상품 상세 -->
+  <section class="section profile-page pd-page">
+    <!-- 상품을 찾지 못했을 때 -->
+    <div class="order-list" id="pdEmpty" hidden>
+      <div class="cart-empty">
+        <p>상품을 찾을 수 없습니다.</p>
+        <a href="index.html#recommend" class="my-logout">상품 보러 가기</a>
+      </div>
+    </div>
+
+    <div id="pdBody" hidden>
+      <div class="pd">
+        <!-- 상품 이미지 -->
+        <div class="pd__gallery">
+          <div class="pd__main" id="pdMain"></div>
+          <ul class="pd__thumbs" id="pdThumbs" hidden></ul>
+        </div>
+
+        <!-- 상품 정보 -->
+        <div class="pd__info">
+          <p class="pd__brand" id="pdBrand"></p>
+          <h2 class="pd__name" id="pdName"></h2>
+          <p class="pd__summary" id="pdSummary" hidden></p>
+          <p class="pd__price" id="pdPrice"></p>
+
+          <dl class="pd__meta" id="pdMeta"></dl>
+
+          <div class="pd__qty-row">
+            <span>수량</span>
+            <div class="cart-qty">
+              <button type="button" class="cart-qty__btn" id="pdMinus" aria-label="수량 줄이기">−</button>
+              <input type="number" class="cart-qty__input" id="pdQty" min="1" max="99" value="1" aria-label="수량">
+              <button type="button" class="cart-qty__btn" id="pdPlus" aria-label="수량 늘리기">+</button>
+            </div>
+          </div>
+
+          <div class="pd__total">
+            <span>총 상품금액</span>
+            <strong id="pdTotal"></strong>
+          </div>
+
+          <div class="pd__buttons">
+            <button type="button" class="join-form__sub" id="pdCart">장바구니 담기</button>
+            <button type="button" class="join-form__submit" id="pdBuy">바로 구매</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 상세 설명 / 안내 -->
+      <nav class="pd-tabs" aria-label="상품 정보 메뉴">
+        <a href="#pdDetail">상품 상세</a>
+        <a href="#pdGuide">배송 · 교환 · 반품 안내</a>
+      </nav>
+
+      <div class="order-list pd-section" id="pdDetail">
+        <h3>상품 상세</h3>
+        <div class="pd-section__body" id="pdDescription"></div>
+      </div>
+
+      <div class="order-list pd-section" id="pdGuide">
+        <h3>배송 · 교환 · 반품 안내</h3>
+        <div class="pd-section__body">
+          <!-- TODO: 실제 배송/교환 정책으로 확인·수정 -->
+          <dl class="checkout-info pd-guide">
+            <div><dt>결제</dt><dd>무통장입금 (입금 확인 후 배송 준비를 시작합니다.)</dd></div>
+            <div><dt>배송비</dt><dd>주문 후 별도 안내해 드립니다.</dd></div>
+            <div><dt>교환·반품</dt><dd>상품을 받으신 날로부터 7일 이내 고객센터 (051) 581-4303 으로 문의해 주세요. 사용했거나 포장을 훼손한 경우에는 교환·반품이 어려울 수 있습니다.</dd></div>
+            <div><dt>견적 문의</dt><dd>대량 구매나 맞춤 견적은 <a href="index.html#service">견적 문의</a>를 이용해 주세요.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <img class="footer__logo" src="images/logo.svg" alt="istek">
+      <div class="footer__info">
+        <p><b>상호명</b> 이스텍 <b class="gap">대표</b> 박도홍(istek1202@hanmail.net)</p>
+        <!-- TODO: 사업자등록번호 확인 후 추가 -->
+        <p><b>전화</b> (051) 581-4303</p>
+        <p><b>주소</b> 46217 부산광역시 금정구 정룡로 57, 4층</p>
+        <p><b>H.P</b> 010-4593-4944</p>
+        <p><b>FAX</b> (051) 515-7869</p>
+        <p><b>마케팅 문의</b> gyubin1029@naver.com</p>
+        <p class="footer__links"><a href="#">이용약관</a><a href="#">개인정보취급방침</a><a href="#">사업자 정보확인</a></p>
+      </div>
+    </div>
+    <hr>
+  </footer>
+
+  <!-- TOP 버튼 -->
+  <button type="button" class="top-btn" id="topBtn" aria-label="맨 위로">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/></svg>
+    <span>TOP</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
