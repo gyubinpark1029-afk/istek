@@ -116,11 +116,66 @@ alter table public.orders add column if not exists memo           text;         
 alter table public.orders add column if not exists payment_method text not null default '무통장입금';  -- 결제 방법
 alter table public.orders add column if not exists depositor      text;                         -- 입금자명
 
+-- ---------- 상품 (products 테이블) ----------
+-- 상품 추가·수정·삭제는 Supabase 대시보드 > Table Editor > products 에서
+--   판매 중지: is_active 를 false 로 (사이트에서 안 보이고 주문도 안 됨, 지난 주문내역은 그대로)
+--   순서: sort_order 가 작은 상품이 먼저 보임
+create table if not exists public.products (
+  id            text primary key,                       -- 상품 고유 번호 (예: istek-1), 상세 주소와 장바구니가 이 번호를 사용하므로 정한 뒤에는 바꾸지 말 것
+  brand         text not null,                          -- 브랜드 (메인 #태그와 똑같이: istek, HUMAS, miraest, evergreenTop, analytik-jena)
+  name          text not null,                          -- 상품명
+  price         integer not null check (price >= 0),    -- 가격 (원)
+  image         text not null default '',               -- 대표 사진 경로 또는 주소 (비우면 회색 박스)
+  images        jsonb not null default '[]',            -- 추가 사진: ["images/products/istek-1-2.jpg"]
+  summary       text,                                   -- 상품명 아래 한 줄 소개
+  description   text,                                   -- 상세 설명 (빈 줄로 문단 나누기)
+  specs         jsonb not null default '[]',            -- 상품 정보 표: [["모델명", "IS-100"], ["원산지", "대한민국"]]
+  detail_images jsonb not null default '[]',            -- 상세 설명 아래 긴 이미지: ["images/products/istek-1-detail.jpg"]
+  sort_order    integer not null default 0,             -- 보이는 순서 (작을수록 먼저)
+  is_active     boolean not null default true,          -- 판매 중
+  created_at    timestamptz not null default now()
+);
+
+alter table public.products enable row level security;
+
+-- 로그인하지 않은 손님도 상품은 볼 수 있게 (바꾸는 건 대시보드에서만)
+grant select on public.products to anon, authenticated;
+
+drop policy if exists "판매 중인 상품만 조회" on public.products;
+create policy "판매 중인 상품만 조회"
+  on public.products for select
+  to anon, authenticated
+  using (is_active);
+
+-- 처음 한 번: 기존 js/products.js 에 있던 임시 상품 20개 넣기 (이미 있는 번호는 건너뜀 → 대시보드에서 고친 내용이 덮어써지지 않음)
+insert into public.products (id, brand, name, price, sort_order) values
+  ('istek-1', 'istek', '[임시] istek 제품 1', 448000, 10),
+  ('istek-2', 'istek', '[임시] istek 제품 2', 448000, 20),
+  ('istek-3', 'istek', '[임시] istek 제품 3', 448000, 30),
+  ('istek-4', 'istek', '[임시] istek 제품 4', 448000, 40),
+  ('HUMAS-1', 'HUMAS', '[임시] HUMAS 제품 1', 448000, 50),
+  ('HUMAS-2', 'HUMAS', '[임시] HUMAS 제품 2', 448000, 60),
+  ('HUMAS-3', 'HUMAS', '[임시] HUMAS 제품 3', 448000, 70),
+  ('HUMAS-4', 'HUMAS', '[임시] HUMAS 제품 4', 448000, 80),
+  ('evergreenTop-1', 'evergreenTop', '[임시] evergreenTop 제품 1', 448000, 90),
+  ('evergreenTop-2', 'evergreenTop', '[임시] evergreenTop 제품 2', 448000, 100),
+  ('evergreenTop-3', 'evergreenTop', '[임시] evergreenTop 제품 3', 448000, 110),
+  ('evergreenTop-4', 'evergreenTop', '[임시] evergreenTop 제품 4', 448000, 120),
+  ('analytik-jena-1', 'analytik-jena', '[임시] analytik-jena 제품 1', 448000, 130),
+  ('analytik-jena-2', 'analytik-jena', '[임시] analytik-jena 제품 2', 448000, 140),
+  ('analytik-jena-3', 'analytik-jena', '[임시] analytik-jena 제품 3', 448000, 150),
+  ('analytik-jena-4', 'analytik-jena', '[임시] analytik-jena 제품 4', 448000, 160),
+  ('miraest-1', 'miraest', '[임시] miraest 제품 1', 448000, 170),
+  ('miraest-2', 'miraest', '[임시] miraest 제품 2', 448000, 180),
+  ('miraest-3', 'miraest', '[임시] miraest 제품 3', 448000, 190),
+  ('miraest-4', 'miraest', '[임시] miraest 제품 4', 448000, 200)
+on conflict (id) do nothing;
+
 -- 주문 만들기: 사이트는 이 함수로만 주문을 넣을 수 있음 (orders 테이블에 직접 쓰기 권한은 없음)
--- 주문번호 생성, 총 결제금액 계산, 상태('입금전')는 서버에서 정하므로 사이트에서 바꿀 수 없음
--- ※ 상품 가격은 아직 사이트(js/products.js)에서 보내 줌. 상품을 Supabase로 옮기면 여기서 가격을 직접 조회하도록 바꿀 것
+-- 사이트는 상품 번호와 수량만 보내고, 상품명·가격·사진은 여기서 products 테이블을 직접 조회함
+-- 주문번호 생성, 총 결제금액 계산, 상태('입금전')도 서버에서 정하므로 사이트에서 바꿀 수 없음
 create or replace function public.place_order(
-  p_items          jsonb,   -- [{"id": "istek-1", "name": "상품명", "price": 448000, "qty": 1, "image": ""}]
+  p_items          jsonb,   -- [{"id": "istek-1", "qty": 1}]
   p_receiver_name  text,
   p_receiver_phone text,
   p_zipcode        text,
@@ -140,6 +195,7 @@ declare
   v_total bigint := 0;
   v_name  text;
   v_price integer;
+  v_image text;
   v_qty   integer;
   v_id    bigint;
   v_no    text;
@@ -154,16 +210,21 @@ begin
   end if;
 
   for v_item in select value from jsonb_array_elements(p_items) loop
-    v_name  := nullif(trim(v_item ->> 'name'), '');
-    v_price := (v_item ->> 'price')::integer;
-    v_qty   := (v_item ->> 'qty')::integer;
-    if v_name is null or v_price is null or v_price < 0
-       or v_qty is null or v_qty < 1 or v_qty > 99 then
+    v_qty := (v_item ->> 'qty')::integer;
+    if v_qty is null or v_qty < 1 or v_qty > 99 then
       raise exception '주문할 상품이 올바르지 않습니다.';
     end if;
+
+    -- 판매 중인 상품의 현재 가격으로 계산 (주문내역에는 주문한 때의 이름·가격이 그대로 남음)
+    select p.name, p.price, p.image into v_name, v_price, v_image
+    from public.products p
+    where p.id = v_item ->> 'id' and p.is_active;
+    if not found then
+      raise exception '판매하지 않는 상품이 포함되어 있습니다. 장바구니를 확인해 주세요.';
+    end if;
+
     v_items := v_items || jsonb_build_array(jsonb_build_object(
-      'id', v_item ->> 'id', 'name', v_name, 'price', v_price, 'qty', v_qty,
-      'image', coalesce(v_item ->> 'image', '')));
+      'id', v_item ->> 'id', 'name', v_name, 'price', v_price, 'qty', v_qty, 'image', v_image));
     v_total := v_total + v_price::bigint * v_qty;
   end loop;
 

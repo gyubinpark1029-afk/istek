@@ -69,18 +69,17 @@
   var tags = document.querySelectorAll('.tag');
   var more = document.getElementById('recommendMore');
   var RECOMMEND_COUNT = 4;
+  var PRODUCTS = null; // Supabase에서 불러오기 전에는 null
 
   function renderProducts(brand) {
+    more.href = 'products.html?brand=' + encodeURIComponent(brand);
+    if (!PRODUCTS) return; // 불러오는 중
+
     productList.textContent = '';
     var items = PRODUCTS.filter(function (p) { return p.brand === brand; });
 
-    more.href = 'products.html?brand=' + encodeURIComponent(brand);
-
     if (items.length === 0) {
-      var empty = document.createElement('li');
-      empty.className = 'product-empty';
-      empty.textContent = '등록된 제품이 없습니다.';
-      productList.appendChild(empty);
+      productsMessage(productList, '등록된 제품이 없습니다.');
       return;
     }
 
@@ -101,5 +100,16 @@
     });
   });
 
-  renderProducts(document.querySelector('.tag.is-active').dataset.brand);
+  function activeBrand() {
+    return document.querySelector('.tag.is-active').dataset.brand;
+  }
+
+  renderProducts(activeBrand());
+  productsMessage(productList, '상품을 불러오는 중...');
+  Products.load().then(function (list) {
+    PRODUCTS = list;
+    renderProducts(activeBrand());
+  }).catch(function (err) {
+    productsMessage(productList, '상품을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요. (' + err.message + ')');
+  });
 })();

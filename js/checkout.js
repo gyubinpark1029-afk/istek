@@ -12,6 +12,7 @@
   var same = document.getElementById('sameAsBuyer');
   var buyer = {};
   var orderItems = [];
+  var PRODUCTS = []; // Supabase에서 불러온 판매 중인 상품 (화면 표시용, 실제 결제금액은 서버가 계산)
 
   if (!supabaseClient) {
     alert('서버 연결 준비 중입니다. (js/supabase-config.js 설정 필요)');
@@ -180,9 +181,11 @@
 
     submitBtn.disabled = true;
     submitBtn.textContent = '주문 처리 중...';
+    var orderNo;
+    // 상품 번호와 수량만 보내고, 이름·가격은 서버가 products 테이블에서 직접 확인
     supabaseClient.rpc('place_order', {
       p_items: orderItems.map(function (it) {
-        return { id: it.product.id, name: it.product.name, price: it.product.price, qty: it.qty, image: it.product.image || '' };
+        return { id: it.product.id, qty: it.qty };
       }),
       p_receiver_name: name,
       p_receiver_phone: phone,
@@ -193,13 +196,18 @@
       p_depositor: depositor
     }).then(function (res) {
       if (res.error) throw res.error;
+      orderNo = res.data;
 
       // 주문한 상품은 장바구니에서 빼기
       Cart.remove(orderItems.map(function (it) { return it.product.id; }));
       try { sessionStorage.removeItem(CHECKOUT_KEY); } catch (err) {}
 
-      document.getElementById('doneNo').textContent = res.data;
-      document.getElementById('doneTotal').textContent = won(total);
+      // 완료 화면에는 서버가 계산해 저장한 결제금액을 표시 (못 불러오면 화면의 금액)
+      return supabaseClient.from('orders').select('total_price').eq('order_no', orderNo).maybeSingle()
+        .then(function (r) { return r.data ? r.data.total_price : total; }, function () { return total; });
+    }).then(function (paid) {
+      document.getElementById('doneNo').textContent = orderNo;
+      document.getElementById('doneTotal').textContent = won(paid);
       document.getElementById('doneBank').textContent = BANK_INFO;
       document.getElementById('doneDepositor').textContent = depositor;
       form.hidden = true;
@@ -220,13 +228,21 @@
       return;
     }
 
-    orderItems = loadItems();
-    if (!orderItems.length) {
-      emptyBox.hidden = false;
-      return;
-    }
-    renderItems();
+    return Products.load().then(function (list) {
+      PRODUCTS = list;
+      orderItems = loadItems();
+      if (!orderItems.length) {
+        emptyBox.hidden = false;
+        return;
+      }
+      renderItems();
+      return loadBuyer(session);
+    });
+  }).catch(function (err) {
+    alert('주문서를 불러오지 못했습니다. (' + err.message + ')');
+  });
 
+  function loadBuyer(session) {
     return supabaseClient.from('users').select('name, email, phone, zipcode, address, address_detail').maybeSingle()
       .then(function (r) {
         var meta = session.user.user_metadata || {};
@@ -238,9 +254,7 @@
         form.depositor.value = buyer.name || '';
         form.hidden = false;
       });
-  }).catch(function (err) {
-    alert('주문서를 불러오지 못했습니다. (' + err.message + ')');
-  });
+  }
 
   // 다른 탭에서 로그아웃하면 로그인 화면으로
   supabaseClient.auth.onAuthStateChange(function (event) {

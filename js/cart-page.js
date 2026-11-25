@@ -17,8 +17,11 @@
     return e;
   }
 
-  // 장바구니 목록 + 상품 정보 (상품 목록에서 사라진 상품은 장바구니에서도 정리)
+  var PRODUCTS = null; // Supabase에서 불러온 판매 중인 상품
+
+  // 장바구니 목록 + 상품 정보 (판매 중지·삭제된 상품은 장바구니에서도 정리)
   function items() {
+    if (!PRODUCTS) return [];
     var list = Cart.get();
     var found = [];
     var missing = [];
@@ -167,8 +170,18 @@
 
   // 다른 탭에서 장바구니를 바꾸면 다시 그리기
   window.addEventListener('storage', function (e) {
-    if (e.key === 'istek-cart') render();
+    if (e.key === 'istek-cart' && PRODUCTS) render();
   });
 
-  render();
+  // 상품 정보를 불러온 뒤에 그리기 (그 전에는 "불러오는 중")
+  actions.hidden = total.hidden = true;
+  document.getElementById('cartCount').textContent = '불러오는 중...';
+  Products.load().then(function (list) {
+    PRODUCTS = list;
+    render();
+  }).catch(function (err) {
+    document.getElementById('cartCount').textContent = '';
+    empty.querySelector('p').textContent = '상품 정보를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요. (' + err.message + ')';
+    empty.hidden = false;
+  });
 })();
