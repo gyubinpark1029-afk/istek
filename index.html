@@ -47,11 +47,11 @@
       <li class="menu__item">
         <button type="button" class="menu__toggle" aria-expanded="false">브랜드별<i></i></button>
         <div class="menu__sub"><ul>
-          <li><a href="#">istek</a></li>
-          <li><a href="#">HUMAS</a></li>
-          <li><a href="#">miraest</a></li>
-          <li><a href="#">evergreenTop</a></li>
-          <li><a href="#">analytik-jena</a></li>
+          <li><a href="products.html?brand=istek">istek</a></li>
+          <li><a href="products.html?brand=HUMAS">HUMAS</a></li>
+          <li><a href="products.html?brand=miraest">miraest</a></li>
+          <li><a href="products.html?brand=evergreenTop">evergreenTop</a></li>
+          <li><a href="products.html?brand=analytik-jena">analytik-jena</a></li>
         </ul></div>
       </li>
       <li class="menu__item">
@@ -95,6 +95,13 @@
       <li><button type="button" class="tag" data-brand="miraest" aria-pressed="false">#miraest</button></li>
     </ul>
     <ul class="product-list" id="productList" aria-live="polite"></ul>
+
+    <!-- 더보기: 선택한 브랜드의 전체 상품 목록으로 -->
+    <a href="products.html" class="more-box" id="recommendMore">
+      <span class="more-box__label">상품 더보기</span>
+      <span class="more-box__count"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
   </section>
 
   <!-- After Service -->
@@ -137,6 +144,7 @@
   <script src="js/auth.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/product-card.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>

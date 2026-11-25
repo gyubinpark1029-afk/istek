@@ -726,3 +726,32 @@ a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
   .pd-section__body { padding: 18px 16px; }
   .pd-section__text { font-size: 14px; }
 }
+
+/* ---------- 더보기 박스 (메인 Recommend 아래) ---------- */
+.more-box { display: flex; align-items: center; justify-content: center; gap: 12px; height: 72px; margin-top: 56px; border: 1px solid #ccc; border-radius: 16px; font-size: 18px; font-weight: 700; color: #333; transition: border-color .2s, color .2s, background .2s; }
+.more-box:hover { border-color: var(--blue); background: #f7f8fb; color: var(--blue); }
+.more-box__count { font-size: 15px; font-weight: 400; color: #888; }
+.more-box__count:empty { display: none; }
+.more-box svg { width: 20px; height: 20px; }
+
+/* ---------- 전체 상품 목록 ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.plist-brands { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 40px; margin-top: 40px; font-size: 18px; font-weight: 700; }
+.plist-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; padding-bottom: 14px; border-bottom: 1px solid #333; }
+.plist-bar__count { font-size: 15px; color: #555; }
+.plist-bar__count b { color: var(--blue); }
+.plist-bar__sort select { height: 36px; padding: 0 10px; border: 1px solid #ccc; background: #fff; font: inherit; font-size: 14px; }
+.plist-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 56px 18px; margin-top: 32px; text-align: left; }
+.plist-grid .product-empty { grid-column: 1 / -1; }
+
+@media (max-width: 1024px) {
+  .plist-grid { grid-template-columns: repeat(3, 1fr); gap: 40px 14px; }
+}
+
+@media (max-width: 768px) {
+  .more-box { height: 56px; margin-top: 32px; border-radius: 12px; font-size: 15px; }
+  .more-box__count { font-size: 13px; }
+  .plist-brands { gap: 8px 20px; margin-top: 24px; font-size: 16px; }
+  .plist-bar { margin-top: 24px; }
+  .plist-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; margin-top: 20px; }
+}

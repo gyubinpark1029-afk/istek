@@ -63,14 +63,20 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // Recommend: #브랜드를 누르면 그 브랜드의 제품만 보여주기
+  // Recommend: #브랜드를 누르면 그 브랜드의 제품을 최대 4개 보여주고, 아래 더보기로 전체 목록 연결
   var productList = document.getElementById('productList');
   if (!productList) return; // 메인 페이지가 아니면 건너뛰기
   var tags = document.querySelectorAll('.tag');
+  var more = document.getElementById('recommendMore');
+  var RECOMMEND_COUNT = 4;
 
   function renderProducts(brand) {
     productList.textContent = '';
     var items = PRODUCTS.filter(function (p) { return p.brand === brand; });
+
+    more.href = 'products.html?brand=' + encodeURIComponent(brand);
+    more.querySelector('.more-box__label').textContent = '#' + brand + ' 상품 더보기';
+    more.querySelector('.more-box__count').textContent = items.length ? '전체 ' + items.length + '개' : '';
 
     if (items.length === 0) {
       var empty = document.createElement('li');
@@ -80,48 +86,8 @@
       return;
     }
 
-    items.forEach(function (p) {
-      var li = document.createElement('li');
-
-      var img;
-      if (p.image) {
-        img = document.createElement('img');
-        img.src = p.image;
-        img.alt = p.name;
-        img.className = 'product__img';
-      } else {
-        img = document.createElement('div');
-        img.className = 'product__img ph';
-      }
-
-      var name = document.createElement('p');
-      name.className = 'product__name';
-      name.textContent = p.name;
-
-      // 사진과 상품명을 누르면 상품 상세 페이지로
-      var link = document.createElement('a');
-      link.className = 'product__link';
-      link.href = 'product.html?id=' + encodeURIComponent(p.id);
-      link.appendChild(img);
-      link.appendChild(name);
-
-      var price = document.createElement('p');
-      price.className = 'product__price';
-      price.textContent = p.price.toLocaleString('ko-KR') + '원';
-
-      var addBtn = document.createElement('button');
-      addBtn.type = 'button';
-      addBtn.className = 'product__cart';
-      addBtn.textContent = '장바구니 담기';
-      addBtn.addEventListener('click', function () {
-        Cart.add(p.id, 1);
-        if (confirm('장바구니에 담았습니다.\n장바구니로 이동할까요?')) location.href = 'cart.html';
-      });
-
-      li.appendChild(link);
-      li.appendChild(price);
-      li.appendChild(addBtn);
-      productList.appendChild(li);
+    items.slice(0, RECOMMEND_COUNT).forEach(function (p) {
+      productList.appendChild(productCard(p));
     });
   }
 
