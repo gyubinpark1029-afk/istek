@@ -786,3 +786,27 @@ a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
   .legal__table { font-size: 13px; }
   .legal__table th, .legal__table td { padding: 8px; }
 }
+
+/* ---------- 온라인 문의 ---------- */
+.inquiry .field select, .inquiry .field textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  transition: border-color .2s;
+}
+.inquiry .field select { height: 44px; padding: 0 12px; }
+.inquiry .field textarea { min-height: 180px; padding: 12px 14px; line-height: 1.6; resize: vertical; }
+.inquiry .field select:focus, .inquiry .field textarea:focus { outline: none; border-color: var(--blue); }
+.inquiry .field select.is-error, .inquiry .field textarea.is-error { border-color: #e03131; }
+.inquiry__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.inquiry__link { margin-left: 6px; font-size: 13px; color: #888; text-decoration: underline; }
+.inquiry .cart-total__buttons button { width: 100%; max-width: 320px; }
+.inquiry .checkout-done p + p { margin-top: 10px; }
+
+@media (max-width: 768px) {
+  .inquiry .field select, .inquiry .field textarea { font-size: 16px; }
+  .inquiry .field textarea { min-height: 160px; }
+  .inquiry .cart-total__buttons button { max-width: none; }
+}

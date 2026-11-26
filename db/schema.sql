@@ -249,3 +249,67 @@ $$;
 
 revoke execute on function public.place_order(jsonb, text, text, text, text, text, text, text) from public, anon;
 grant execute on function public.place_order(jsonb, text, text, text, text, text, text, text) to authenticated;
+
+
+-- ---------- 온라인 문의 (inquiry.html) ----------
+-- 문의는 submit_inquiry 함수로만 저장됨 (누구나 접수 가능, 표를 직접 읽거나 고칠 수는 없음)
+-- 접수된 문의는 Supabase 대시보드 > Table Editor > inquiries 에서 확인
+--   status: 접수 → 처리중 → 답변완료 로 직접 바꿔 가며 관리
+create table if not exists public.inquiries (
+  id          bigint generated always as identity primary key,
+  type        text not null check (type in ('견적 문의', '제품 문의', 'A/S 문의', '기타 문의')),  -- 문의 유형
+  name        text not null,                                   -- 이름
+  company     text,                                            -- 회사·기관명
+  phone       text not null,                                   -- 연락처
+  email       text not null,                                   -- 이메일
+  title       text not null,                                   -- 제목
+  content     text not null,                                   -- 문의 내용
+  auth_id     uuid references auth.users (id) on delete set null,  -- 로그인한 회원이면 회원 정보 (비회원은 비어 있음)
+  status      text not null default '접수'
+              check (status in ('접수', '처리중', '답변완료')),
+  created_at  timestamptz not null default now()               -- 접수일
+);
+
+create index if not exists inquiries_created_at on public.inquiries (created_at desc);
+
+-- 정책을 하나도 만들지 않으므로 사이트(anon, authenticated)에서는 표를 직접 읽고 쓸 수 없음
+alter table public.inquiries enable row level security;
+
+create or replace function public.submit_inquiry(
+  p_type    text,
+  p_name    text,
+  p_company text,
+  p_phone   text,
+  p_email   text,
+  p_title   text,
+  p_content text
+)
+returns void
+language plpgsql
+security definer set search_path = ''
+as $$
+begin
+  if p_type not in ('견적 문의', '제품 문의', 'A/S 문의', '기타 문의') then
+    raise exception '문의 유형이 올바르지 않습니다.';
+  end if;
+
+  if coalesce(trim(p_name), '') = '' or coalesce(trim(p_phone), '') = ''
+     or coalesce(trim(p_email), '') = '' or coalesce(trim(p_title), '') = ''
+     or coalesce(trim(p_content), '') = '' then
+    raise exception '필수 항목을 모두 입력해 주세요.';
+  end if;
+
+  -- 너무 긴 글은 거절 (사이트 입력칸 제한과 같은 길이)
+  if length(p_name) > 50 or length(coalesce(p_company, '')) > 100 or length(p_phone) > 20
+     or length(p_email) > 100 or length(p_title) > 100 or length(p_content) > 3000 then
+    raise exception '입력한 내용이 너무 깁니다.';
+  end if;
+
+  insert into public.inquiries (type, name, company, phone, email, title, content, auth_id)
+  values (p_type, trim(p_name), nullif(trim(p_company), ''), trim(p_phone), trim(p_email),
+          trim(p_title), trim(p_content), auth.uid());
+end;
+$$;
+
+revoke execute on function public.submit_inquiry(text, text, text, text, text, text, text) from public;
+grant execute on function public.submit_inquiry(text, text, text, text, text, text, text) to anon, authenticated;
