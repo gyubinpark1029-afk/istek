@@ -472,6 +472,8 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
   .product__name { margin-top: 12px; font-size: 15px; }
   .product__price { margin-top: 8px; font-size: 15px; }
   .product-empty { padding: 48px 0; font-size: 16px; }
+  .product-list > li, .plist-grid > li { min-width: 0; } /* 긴 상품명이 칸을 밀어내지 않게 */
+  .product__name { overflow-wrap: anywhere; }
 
   /* After Service: 세로로 */
   .service { padding-top: 100px; }
@@ -756,4 +758,5 @@ a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
   .plist-brands { gap: 8px 20px; margin-top: 24px; font-size: 16px; }
   .plist-bar { margin-top: 24px; }
   .plist-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; margin-top: 20px; }
+  .plist-bar__sort select { font-size: 16px; } /* iOS 자동 확대 방지 */
 }
