@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이용약관 | istek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header__left">
+      <button type="button" class="hamburger" id="menuOpen" aria-label="메뉴 열기" aria-expanded="false" aria-controls="drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <a href="index.html" class="header__logo" aria-label="istek 홈"><img src="images/logo.svg" alt="istek"></a>
+    <div class="header__right">
+      <a href="#" class="icon" aria-label="검색">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      </a>
+      <a href="cart.html" class="icon" aria-label="장바구니">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.5l2.2 10.2a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
+      </a>
+      <a href="login.html" class="icon" aria-label="로그인">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 사이드 메뉴 -->
+  <div class="overlay" id="overlay"></div>
+  <nav class="drawer" id="drawer" aria-label="메인 메뉴" aria-hidden="true">
+    <div class="drawer__head">
+      <img src="images/logo.svg" alt="istek">
+      <button type="button" class="drawer__close" id="menuClose" aria-label="메뉴 닫기">
+        <span></span><span></span>
+      </button>
+    </div>
+    <ul class="menu">
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">브랜드별<i></i></button>
+        <div class="menu__sub"><ul>
+          <li><a href="products.html?brand=istek">istek</a></li>
+          <li><a href="products.html?brand=HUMAS">HUMAS</a></li>
+          <li><a href="products.html?brand=miraest">miraest</a></li>
+          <li><a href="products.html?brand=evergreenTop">evergreenTop</a></li>
+          <li><a href="products.html?brand=analytik-jena">analytik-jena</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item">
+        <button type="button" class="menu__toggle" aria-expanded="false">제품 카테고리<i></i></button>
+        <div class="menu__sub"><ul>
+          <!-- TODO: 실제 카테고리로 교체 -->
+          <li><a href="#">카테고리 1</a></li>
+          <li><a href="#">카테고리 2</a></li>
+          <li><a href="#">카테고리 3</a></li>
+        </ul></div>
+      </li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">견적 문의</a></li>
+      <li class="menu__item"><a class="menu__link" href="index.html#service">고객지원</a></li>
+      <li class="menu__item"><a class="menu__link" href="#">회사소개 / 오시는 길</a></li>
+    </ul>
+  </nav>
+
+  <!-- 이용약관 -->
+  <section class="section profile-page legal">
+    <h2 class="my-title">이용약관</h2>
+    <p class="join__desc">시행일: 2026년 11월 26일</p>
+    <div class="legal__body">
+      <h3>제1조 (목적)</h3>
+      <p>이 약관은 이스텍(이하 "회사")이 운영하는 온라인 쇼핑몰(이하 "사이트")에서 제공하는 서비스를 이용함에 있어 회사와 이용자의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+
+      <h3>제2조 (정의)</h3>
+      <ol>
+        <li>"이용자"란 사이트에 접속하여 이 약관에 따라 회사가 제공하는 서비스를 이용하는 회원 및 비회원을 말합니다.</li>
+        <li>"회원"이란 사이트에 개인정보를 제공하여 회원가입을 한 자로서, 계속적으로 서비스를 이용할 수 있는 자를 말합니다.</li>
+        <li>"비회원"이란 회원가입 없이 사이트가 제공하는 서비스를 이용하는 자를 말합니다.</li>
+      </ol>
+
+      <h3>제3조 (약관의 게시와 개정)</h3>
+      <ol>
+        <li>회사는 이 약관의 내용을 이용자가 쉽게 알 수 있도록 사이트에 게시합니다.</li>
+        <li>회사는 관련 법령을 위배하지 않는 범위에서 이 약관을 개정할 수 있으며, 개정 시 적용일자와 개정 사유를 밝혀 적용일 7일 전부터 사이트에 공지합니다. 이용자에게 불리한 변경의 경우에는 30일 전부터 공지합니다.</li>
+        <li>이용자가 개정된 약관의 적용일 이후에도 서비스를 계속 이용하면 개정된 약관에 동의한 것으로 봅니다.</li>
+      </ol>
+
+      <h3>제4조 (서비스의 제공)</h3>
+      <p>회사는 다음과 같은 서비스를 제공합니다.</p>
+      <ol>
+        <li>상품 정보의 제공 및 상품 구매 계약의 체결</li>
+        <li>구매 계약이 체결된 상품의 배송</li>
+        <li>견적 및 상품 관련 문의 응대, 사후 서비스(A/S)</li>
+        <li>기타 회사가 정하는 서비스</li>
+      </ol>
+
+      <h3>제5조 (회원가입)</h3>
+      <ol>
+        <li>이용자는 회사가 정한 가입 양식에 따라 회원 정보를 기입하고 이 약관과 개인정보 수집 및 이용에 동의함으로써 회원가입을 신청합니다.</li>
+        <li>회사는 다음 각 호에 해당하는 신청에 대해서는 승낙을 하지 않거나 사후에 회원 자격을 제한 또는 박탈할 수 있습니다.
+          <ul>
+            <li>타인의 정보를 도용하거나 허위 정보를 기재한 경우</li>
+            <li>이전에 회원 자격을 상실한 적이 있는 경우</li>
+            <li>기타 회원으로 등록하는 것이 사이트 운영에 현저히 지장이 있다고 판단되는 경우</li>
+          </ul>
+        </li>
+        <li>회원은 가입 시 기재한 정보가 변경된 경우 사이트에서 직접 수정하여야 하며, 변경하지 않아 발생한 불이익은 회원이 부담합니다.</li>
+      </ol>
+
+      <h3>제6조 (회원 정보의 관리)</h3>
+      <ol>
+        <li>회원은 자신의 이메일과 비밀번호를 직접 관리할 책임이 있으며, 이를 제3자에게 이용하게 해서는 안 됩니다.</li>
+        <li>회원은 계정이 도용되었거나 제3자가 사용하고 있음을 알게 된 경우 즉시 회사에 알려야 합니다.</li>
+      </ol>
+
+      <h3>제7조 (구매 신청과 계약의 성립)</h3>
+      <ol>
+        <li>이용자는 사이트에서 상품 선택, 수량 지정, 배송 정보 입력, 결제 방법 선택, 약관 동의 등의 절차를 거쳐 구매를 신청합니다.</li>
+        <li>구매 계약은 회사가 구매 신청에 대하여 주문 접수를 확인하고 입금이 확인된 때 성립하는 것으로 합니다.</li>
+        <li>회사는 재고 부족, 가격 표시 오류, 기타 불가피한 사유가 있는 경우 구매 신청을 승낙하지 않거나 취소할 수 있으며, 이 경우 지체 없이 이용자에게 알리고 이미 받은 대금이 있으면 환불합니다.</li>
+      </ol>
+
+      <h3>제8조 (결제 방법)</h3>
+      <ol>
+        <li>사이트에서 제공하는 결제 방법은 무통장입금입니다. 회사는 필요에 따라 결제 방법을 추가하거나 변경할 수 있으며, 이 경우 사이트에 공지합니다.</li>
+        <li>무통장입금을 선택한 이용자는 주문 후 회사가 안내한 계좌로 입금하여야 하며, 입금 확인 후 배송 준비가 시작됩니다. 안내된 기간 안에 입금이 확인되지 않으면 주문이 취소될 수 있습니다.</li>
+      </ol>
+
+      <h3>제9조 (배송)</h3>
+      <ol>
+        <li>회사는 입금 확인 후 상품을 배송합니다. 배송비와 배송 기간은 상품과 지역에 따라 달라질 수 있으며, 주문 후 별도로 안내합니다.</li>
+        <li>천재지변, 물류 사정 등 불가피한 사유로 배송이 지연되는 경우 회사는 이를 이용자에게 알립니다.</li>
+      </ol>
+
+      <h3>제10조 (청약철회, 교환 및 반품)</h3>
+      <ol>
+        <li>이용자는 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 상품을 받은 날부터 7일 이내에 청약을 철회할 수 있습니다. 다만 상품의 내용이 표시·광고된 내용과 다르거나 계약 내용과 다르게 이행된 경우에는 상품을 받은 날부터 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날부터 30일 이내에 청약을 철회할 수 있습니다.</li>
+        <li>다음 각 호의 경우에는 청약철회 및 교환·반품이 제한될 수 있습니다.
+          <ul>
+            <li>이용자에게 책임 있는 사유로 상품이 멸실 또는 훼손된 경우</li>
+            <li>이용자의 사용 또는 일부 소비로 상품의 가치가 현저히 감소한 경우</li>
+            <li>시간이 지나 다시 판매하기 곤란할 정도로 상품의 가치가 현저히 감소한 경우</li>
+            <li>주문에 따라 개별적으로 생산 또는 주문 제작되는 상품 등 법령에서 정한 경우</li>
+          </ul>
+        </li>
+        <li>청약철회 및 교환·반품은 고객센터 (051) 581-4303 으로 문의해 주시기 바랍니다.</li>
+        <li>청약철회가 이루어진 경우 회사는 상품을 반환받은 날부터 3영업일 이내에 대금을 환불합니다.</li>
+      </ol>
+
+      <h3>제11조 (회사의 의무)</h3>
+      <ol>
+        <li>회사는 관련 법령과 이 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 지속적이고 안정적으로 서비스를 제공하기 위해 노력합니다.</li>
+        <li>회사는 이용자의 개인정보를 보호하기 위해 <a href="privacy.html">개인정보처리방침</a>을 수립하고 이를 준수합니다.</li>
+      </ol>
+
+      <h3>제12조 (이용자의 의무)</h3>
+      <p>이용자는 다음 행위를 하여서는 안 됩니다.</p>
+      <ol>
+        <li>가입 또는 주문 시 허위 내용을 등록하는 행위</li>
+        <li>타인의 정보를 도용하는 행위</li>
+        <li>사이트에 게시된 정보를 무단으로 변경하거나 회사의 지적재산권을 침해하는 행위</li>
+        <li>사이트의 운영을 방해하거나 안정적 운영에 지장을 주는 행위</li>
+        <li>기타 관련 법령에 위반되는 행위</li>
+      </ol>
+
+      <h3>제13조 (저작권)</h3>
+      <p>사이트에 게시된 콘텐츠(상품 이미지, 문구, 디자인 등)에 대한 저작권은 회사 또는 해당 권리자에게 있으며, 이용자는 회사의 사전 승낙 없이 이를 복제, 전송, 배포하거나 상업적으로 이용할 수 없습니다.</p>
+
+      <h3>제14조 (면책)</h3>
+      <ol>
+        <li>회사는 천재지변 또는 이에 준하는 불가항력으로 서비스를 제공할 수 없는 경우 책임이 면제됩니다.</li>
+        <li>회사는 이용자의 귀책사유로 인한 서비스 이용 장애에 대해서는 책임을 지지 않습니다.</li>
+      </ol>
+
+      <h3>제15조 (분쟁 해결 및 관할)</h3>
+      <ol>
+        <li>회사는 이용자가 제기하는 정당한 의견이나 불만을 반영하고 피해를 보상하기 위해 노력합니다.</li>
+        <li>이 약관과 서비스 이용에 관한 분쟁은 대한민국 법령을 따르며, 소송이 필요한 경우 민사소송법에 따른 관할 법원에 제기합니다.</li>
+      </ol>
+
+      <h3>사업자 정보</h3>
+      <ul>
+        <li>상호: 이스텍 / 대표: 박도홍</li>
+        <li>주소: 46217 부산광역시 금정구 정룡로 57, 4층</li>
+        <li>전화: (051) 581-4303 / FAX: (051) 515-7869</li>
+        <li>이메일: istek1202@hanmail.net</li>
+      </ul>
+
+      <p class="legal__note">부칙: 이 약관은 2026년 11월 26일부터 시행합니다.</p>
+    </div>
+
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <img class="footer__logo" src="images/logo.svg" alt="istek">
+      <div class="footer__info">
+        <p><b>상호명</b> 이스텍 <b class="gap">대표</b> 박도홍(istek1202@hanmail.net)</p>
+        <!-- TODO: 사업자등록번호 확인 후 추가 -->
+        <p><b>전화</b> (051) 581-4303</p>
+        <p><b>주소</b> 46217 부산광역시 금정구 정룡로 57, 4층</p>
+        <p><b>H.P</b> 010-4593-4944</p>
+        <p><b>FAX</b> (051) 515-7869</p>
+        <p><b>마케팅 문의</b> gyubin1029@naver.com</p>
+        <p class="footer__links"><a href="terms.html">이용약관</a><a href="privacy.html">개인정보취급방침</a><a href="#">사업자 정보확인</a></p>
+      </div>
+    </div>
+    <hr>
+  </footer>
+
+  <!-- TOP 버튼 -->
+  <button type="button" class="top-btn" id="topBtn" aria-label="맨 위로">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/></svg>
+    <span>TOP</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

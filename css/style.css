@@ -762,3 +762,27 @@ a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
   .plist-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; margin-top: 20px; }
   .plist-bar__sort select { font-size: 16px; } /* iOS 자동 확대 방지 */
 }
+
+/* ---------- 이용약관 / 개인정보처리방침 ---------- */
+.legal { text-align: left; }
+.legal .my-title { font-weight: 700; text-align: center; }
+.legal .join__desc { text-align: center; }
+.legal__body { margin-top: 48px; padding-bottom: 20px; font-size: 15px; line-height: 1.8; color: #333; word-break: keep-all; overflow-wrap: anywhere; }
+.legal__body h3 { margin-top: 36px; margin-bottom: 10px; font-size: 18px; font-weight: 700; color: #000; }
+.legal__body h3:first-child { margin-top: 0; }
+.legal__body p + p, .legal__body p + ol, .legal__body p + ul, .legal__body p + .legal__table { margin-top: 10px; }
+.legal__body ol, .legal__body ul { padding-left: 22px; list-style: revert; }
+.legal__body ol ul { margin-top: 6px; }
+.legal__body li + li { margin-top: 4px; }
+.legal__body .legal__table + p { margin-top: 12px; }
+.legal__table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.6; }
+.legal__table th, .legal__table td { padding: 10px 12px; border: 1px solid #ddd; text-align: left; vertical-align: top; }
+.legal__table th { background: #f6f6f6; font-weight: 500; }
+.legal__note { margin-top: 36px; padding-top: 16px; border-top: 1px solid #e3e5ea; font-size: 14px; color: #777; }
+
+@media (max-width: 768px) {
+  .legal__body { margin-top: 32px; font-size: 14px; }
+  .legal__body h3 { margin-top: 28px; font-size: 16px; }
+  .legal__table { font-size: 13px; }
+  .legal__table th, .legal__table td { padding: 8px; }
+}
