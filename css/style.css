@@ -742,6 +742,7 @@ a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
 
 /* ---------- 전체 상품 목록 ---------- */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.plist-page .my-title { font-weight: 700; }
 .plist-brands { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 40px; margin-top: 40px; font-size: 18px; font-weight: 700; }
 .plist-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; padding-bottom: 14px; border-bottom: 1px solid #333; }
 .plist-bar__count { font-size: 15px; color: #555; }
