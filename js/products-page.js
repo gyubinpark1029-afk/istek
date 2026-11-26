@@ -22,12 +22,21 @@
     var sort = params.get('sort') || '';
     if (!sortSelect.querySelector('option[value="' + sort + '"]')) sort = '';
     sortSelect.value = sort;
+    var query = (params.get('q') || '').trim().slice(0, 100); // 검색어 (헤더 검색창에서 넘어옴)
+    var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+
+    // 검색어의 모든 단어가 상품명·브랜드·한 줄 설명 안에 있는 상품만
+    function matches(p) {
+      var text = (p.name + ' ' + p.brand + ' ' + p.summary).toLowerCase();
+      return terms.every(function (t) { return text.indexOf(t) !== -1; });
+    }
 
     // 주소를 바꿔 두면 새로고침·뒤로가기·링크 공유해도 같은 목록이 보임
     function updateUrl() {
       var q = new URLSearchParams();
       if (brand) q.set('brand', brand);
       if (sort) q.set('sort', sort);
+      if (query) q.set('q', query);
       var s = q.toString();
       history.replaceState(null, '', 'products.html' + (s ? '?' + s : ''));
     }
@@ -53,11 +62,11 @@
 
     function render() {
       renderBrands();
-      var title = brand ? brand + ' 상품' : '전체 상품';
+      var title = query ? '"' + query + '" 검색 결과' : brand ? brand + ' 상품' : '전체 상품';
       document.getElementById('plistTitle').textContent = title;
       document.title = title + ' | istek';
 
-      var items = PRODUCTS.filter(function (p) { return !brand || p.brand === brand; });
+      var items = PRODUCTS.filter(function (p) { return (!brand || p.brand === brand) && matches(p); });
       if (sort === 'low') items.sort(function (a, b) { return a.price - b.price; });
       if (sort === 'high') items.sort(function (a, b) { return b.price - a.price; });
       if (sort === 'name') items.sort(function (a, b) { return a.name.localeCompare(b.name, 'ko'); });
@@ -69,7 +78,7 @@
 
       grid.textContent = '';
       if (!items.length) {
-        productsMessage(grid, '등록된 제품이 없습니다.');
+        productsMessage(grid, query ? '검색 결과가 없습니다. 다른 검색어로 찾아보세요.' : '등록된 제품이 없습니다.');
         return;
       }
       items.forEach(function (p) { grid.appendChild(productCard(p)); });

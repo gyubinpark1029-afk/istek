@@ -833,3 +833,20 @@ a.cart-item__name:hover { color: var(--blue); text-decoration: underline; }
   .about__brands a { padding: 7px 14px; font-size: 14px; }
   .about__btns .my-logout { flex: 1 1 100%; text-align: center; }
 }
+
+/* ---------- 검색창 (헤더 돋보기) ---------- */
+.searchbar { position: fixed; top: 70px; left: 0; right: 0; z-index: 49; padding: 14px 24px; background: #fff; border-bottom: 1px solid #e3e5ea; box-shadow: 0 6px 12px rgba(0, 0, 0, .08); }
+.searchbar[hidden] { display: none; }
+.searchbar__inner { display: flex; align-items: center; gap: 8px; max-width: 720px; margin: 0 auto; }
+.searchbar input { flex: 1; min-width: 0; height: 48px; padding: 0 16px; border: 1px solid #ccc; border-radius: 8px; font: inherit; font-size: 16px; -webkit-appearance: none; appearance: none; }
+.searchbar input:focus { outline: none; border-color: var(--blue); }
+.searchbar__submit { height: 48px; padding: 0 22px; border: 0; border-radius: 8px; background: var(--blue); color: #fff; font: inherit; font-size: 16px; font-weight: 700; cursor: pointer; transition: background .2s; }
+.searchbar__submit:hover { background: var(--point); }
+.searchbar__close { width: 40px; height: 48px; border: 0; background: none; font-size: 28px; line-height: 1; color: #888; cursor: pointer; }
+.searchbar__close:hover { color: #000; }
+
+@media (max-width: 768px) {
+  .searchbar { top: 60px; padding: 10px 12px; }
+  .searchbar input, .searchbar__submit { height: 44px; }
+  .searchbar__submit { padding: 0 16px; }
+}
