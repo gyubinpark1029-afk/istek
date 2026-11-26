@@ -624,10 +624,11 @@ a.join-form__submit { display: flex; align-items: center; justify-content: cente
   .cart-list h3 { padding: 12px 16px; }
   .cart-item { flex-wrap: wrap; gap: 10px 12px; padding: 14px 16px; position: relative; }
   .cart-item__img { width: 64px; height: 64px; }
-  .cart-item__info { flex-basis: calc(100% - 120px); padding-right: 28px; }
+  .cart-item__info { flex-basis: calc(100% - 120px); padding-right: 36px; }
   .cart-qty { margin-left: 30px; }
   .cart-item__price { width: auto; margin-left: auto; }
-  .cart-item__del { position: absolute; top: 10px; right: 8px; }
+  .cart-item__del { position: absolute; top: 2px; right: 2px; width: 44px; height: 44px; }
+  .cart-qty__input { font-size: 16px; } /* 16px 미만이면 iOS가 입력 시 화면을 확대함 */
   .cart-list__actions { padding: 12px 16px; }
   .cart-total { padding: 18px 16px; }
   .cart-total__buttons button { flex: 1; width: auto; height: 48px; font-size: 15px; }
@@ -659,6 +660,7 @@ a.join-form__sub { display: flex; align-items: center; justify-content: center; 
 
 @media (max-width: 768px) {
   .checkout-box__body { padding: 18px 16px 20px; }
+  .my-profile .field input { font-size: 16px; } /* iOS 자동 확대 방지 */
   .checkout-info { padding: 10px 16px 14px; }
   .checkout-info > div { gap: 12px; font-size: 14px; }
   .checkout-info dt { width: 72px; }
